@@ -82,7 +82,7 @@ const config: Config = {
       title: "Front End 筆記",
       logo: {
         alt: "My Site Logo",
-        src: "img/logo.svg",
+        src: "img/magic-book.png",
       },
       items: [
         {
