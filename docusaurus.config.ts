@@ -123,6 +123,6 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
-};
+} satisfies Config;
 
 export default config;
