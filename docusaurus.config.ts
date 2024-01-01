@@ -4,7 +4,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 
 const config: Config = {
   title: "Front End 筆記",
-  tagline: "關於前端的學習紀錄",
+  tagline: "關於前端學習與解決開發上疑難雜症的紀錄",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
@@ -67,8 +67,19 @@ const config: Config = {
   themeConfig: {
     // Replace with your project's social card
     image: "img/docusaurus-social-card.jpg",
+    docs: {
+      sidebar: {
+        hideable: false, // 側邊欄可否收起展開
+      },
+    },
+    colorMode: {
+      // 深淺色配置
+      defaultMode: "dark",
+      disableSwitch: false,
+      respectPrefersColorScheme: true,
+    },
     navbar: {
-      title: "My Site",
+      title: "Front End 筆記",
       logo: {
         alt: "My Site Logo",
         src: "img/logo.svg",
@@ -76,13 +87,13 @@ const config: Config = {
       items: [
         {
           type: "docSidebar",
-          sidebarId: "tutorialSidebar",
+          sidebarId: "notesSidebar",
           position: "left",
-          label: "Tutorial",
+          label: "Notes",
         },
         { to: "/blog", label: "Blog", position: "left" },
         {
-          href: "https://github.com/facebook/docusaurus",
+          href: "https://github.com/wintersprouter",
           label: "GitHub",
           position: "right",
         },
@@ -92,33 +103,7 @@ const config: Config = {
       style: "dark",
       links: [
         {
-          title: "Docs",
-          items: [
-            {
-              label: "Tutorial",
-              to: "/docs/intro",
-            },
-          ],
-        },
-        {
-          title: "Community",
-          items: [
-            {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus",
-            },
-            {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus",
-            },
-            {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus",
-            },
-          ],
-        },
-        {
-          title: "More",
+          title: "About Me",
           items: [
             {
               label: "Blog",
@@ -131,10 +116,10 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} wintersprouter, Inc. Built with Docusaurus.`,
     },
     prism: {
-      theme: prismThemes.github,
+      theme: prismThemes.oneLight,
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
