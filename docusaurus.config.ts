@@ -4,7 +4,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 
 const config: Config = {
   title: "Front End 筆記",
-  tagline: "關於前端學習與解決開發上疑難雜症的紀錄",
+  tagline: "紀錄學習的歷程",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
