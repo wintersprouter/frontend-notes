@@ -85,12 +85,12 @@ const config: Config = {
         src: "img/magic-book.png",
       },
       items: [
-        {
-          type: "docSidebar",
-          sidebarId: "notesSidebar",
-          position: "left",
-          label: "Notes",
-        },
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "notesSidebar",
+        //   position: "left",
+        //   label: "Notes",
+        // },
         { to: "/blog", label: "Blog", position: "left" },
         {
           href: "https://github.com/wintersprouter",
