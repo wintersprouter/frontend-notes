@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend_notes=self.webpackChunkfrontend_notes||[]).push([[966],{5717:e=>{e.exports=JSON.parse('{"label":"2023 \u9435\u4eba\u8cfd","permalink":"/blog/tags/2023-\u9435\u4eba\u8cfd","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);
