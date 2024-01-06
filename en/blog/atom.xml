@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://wintersprouter.github.io/en/blog</id>
+    <id>https://wintersprouter.github.io/frontend-notes/en/blog</id>
     <title>Front End 筆記 Blog</title>
     <updated>2024-01-07T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://wintersprouter.github.io/en/blog"/>
+    <link rel="alternate" href="https://wintersprouter.github.io/frontend-notes/en/blog"/>
     <subtitle>Front End 筆記 Blog</subtitle>
-    <icon>https://wintersprouter.github.io/en/img/favicon.ico</icon>
+    <icon>https://wintersprouter.github.io/frontend-notes/en/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[2023 iThome 鐵人賽頒獎典禮後記]]></title>
-        <id>https://wintersprouter.github.io/en/blog/2023-ironman-event</id>
-        <link href="https://wintersprouter.github.io/en/blog/2023-ironman-event"/>
+        <id>https://wintersprouter.github.io/frontend-notes/en/blog/2023-ironman-event</id>
+        <link href="https://wintersprouter.github.io/frontend-notes/en/blog/2023-ironman-event"/>
         <updated>2024-01-07T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[第一次參加了而且完成了 it 鐵人賽的挑戰，雖然這次沒有得獎，但好奇頒獎典禮拿獎的都會是什麼樣的人，還有會有什麼有趣的內容、再加上這次組隊的朋友拿獎了，就決定去頒獎典禮看看。]]></summary>
         <content type="html"><![CDATA[<p>第一次參加了而且完成了 it 鐵人賽的挑戰，雖然這次沒有得獎，但好奇頒獎典禮拿獎的都會是什麼樣的人，還有會有什麼有趣的內容、再加上這次組隊的朋友拿獎了，就決定去頒獎典禮看看。</p>
-<p><img loading="lazy" src="https://wintersprouter.github.io/en/assets/images/20240106_134049-ce48643fe01600d1b0b2a5a086cc8931.jpg" width="4032" height="3024" class="img_ev3q"></p>
+<p><img loading="lazy" src="https://wintersprouter.github.io/frontend-notes/en/assets/images/20240106_134049-ce48643fe01600d1b0b2a5a086cc8931.jpg" width="4032" height="3024" class="img_ev3q"></p>
 <p>地點好像跟之前幾屆的一樣在輔大的百鍊廳，從校門口走到百鍊廳有點距離，<del>想當初上次來輔大還只是個高中生</del></p>
-<p><img loading="lazy" src="https://wintersprouter.github.io/en/assets/images/20240106_134000-241fcb6ef61ca4a86450d6f805ecf909.jpg" width="4032" height="3024" class="img_ev3q"></p>
+<p><img loading="lazy" src="https://wintersprouter.github.io/frontend-notes/en/assets/images/20240106_134000-241fcb6ef61ca4a86450d6f805ecf909.jpg" width="4032" height="3024" class="img_ev3q"></p>
 <p>到了報到處，拿到了一個神秘的紙袋，裡面包含了頒獎典禮的與會吊牌，還有鐵人賽的獎狀、跟個人完賽與團賽的獎牌跟一個鐵人鍊成的紀念卡套，喔，如果有得獎的話，鐵人鍊成獎牌就要上台領獎的時候才會拿到有包含獎項名字的獎牌。（基本上，如果沒得獎的話領完就可以走了（？</p>
-<p><img loading="lazy" src="https://wintersprouter.github.io/en/assets/images/20240106_172410-a84cedd8add85c511983692b74565a0b.jpg" width="3414" height="2561" class="img_ev3q"></p>
+<p><img loading="lazy" src="https://wintersprouter.github.io/frontend-notes/en/assets/images/20240106_172410-a84cedd8add85c511983692b74565a0b.jpg" width="3414" height="2561" class="img_ev3q"></p>
 <p>場地不大，有點糟的是裡面完全收不到訊號，沒網路好焦慮～</p>
-<p><img loading="lazy" src="https://wintersprouter.github.io/en/assets/images/20240106_140200-24d7d64f59a2bedd754937e7fb5eacc5.jpg" width="4032" height="3024" class="img_ev3q"></p>
-<p><img loading="lazy" src="https://wintersprouter.github.io/en/assets/images/20240106_154646-c583758f7cb07f2ce1657683d007ba8c.jpg" width="4032" height="2268" class="img_ev3q"></p>
+<p><img loading="lazy" src="https://wintersprouter.github.io/frontend-notes/en/assets/images/20240106_140200-24d7d64f59a2bedd754937e7fb5eacc5.jpg" width="4032" height="3024" class="img_ev3q"></p>
+<p><img loading="lazy" src="https://wintersprouter.github.io/frontend-notes/en/assets/images/20240106_154646-c583758f7cb07f2ce1657683d007ba8c.jpg" width="4032" height="2268" class="img_ev3q"></p>
 <p>開場後就是一些重要的嘉賓致詞、評審致詞、然後冠軍得獎者致詞以下省略...</p>
 <p>對我來說最有用的就是評審與一些得獎者講述了<strong>撰寫鐵人賽的幾個重要的技巧</strong>:</p>
 <ul>
