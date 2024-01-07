@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfrontend_notes=self.webpackChunkfrontend_notes||[]).push([[770],{769:e=>{e.exports=JSON.parse('{"permalink":"/frontend-notes/en/blog/tags/event","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

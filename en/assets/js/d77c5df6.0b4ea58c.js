@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfrontend_notes=self.webpackChunkfrontend_notes||[]).push([[423],{8536:e=>{e.exports=JSON.parse('[{"label":"2023 \u9435\u4eba\u8cfd","permalink":"/frontend-notes/en/blog/tags/2023-\u9435\u4eba\u8cfd","count":1},{"label":"event","permalink":"/frontend-notes/en/blog/tags/event","count":1}]')}}]);
