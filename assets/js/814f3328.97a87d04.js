@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfrontend_notes=self.webpackChunkfrontend_notes||[]).push([[535],{5641:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"2023 iThome \u9435\u4eba\u8cfd\u9812\u734e\u5178\u79ae\u5f8c\u8a18","permalink":"/frontend-notes/blog/2023-ironman-event","unlisted":false}]}')}}]);
