@@ -1,0 +1,115 @@
+---
+slug: 2023-web-conf
+title: Web Conf 2023 心得與收穫
+authors: [ashley]
+tags: [2023 WebConf, event, conference]
+keywords: ["2023 WebConf", "Web", "front-end"]
+image: ./20230811_131223.jpg
+---
+
+---
+
+![2023 Web Conf](./20230811_131223.jpg)
+
+![2023 Web Conf](./20230811_084509.jpg)
+
+## 參加的動機
+
+一直以來沒有參加過這種大型付費的 conference，又聽說這是睽違十年後再次舉辦 的 webConf ，所以就算現在幾乎都在開發 APP 還是想來看看，畢竟 Web 領域是我剛轉職時主要學的。況且學習前端技術的過程中，讀過不少這次議程講者的書籍或文章，甚至是課程，參加這個活動某種程度上是偶像見面會的概念（？另外，就是想透過這次的 conf 知道現在外面主流開發的方式與技術是什麼？
+
+![](./20230813_162936.jpg)
+
+<small>
+  剛好之前買過的書都有擔任這次活動的講者，另外 PJ 、Summer
+  的文章在我學習前端的過程中也幫助我不少
+</small>
+
+---
+
+## 會後的感受
+
+_可以說是既興奮又焦慮，但焦慮的部分多了一些。_
+
+得到了很多新的觀點跟技術，以及開發想法的啟發，這些都讓我感到很興奮，前端的講者都很有料！3400 元值回票價！但同時又覺得憂慮，這兩天議程下來得到技術和工具超多，越知道更多的新知識，越覺得自己對這個領域的認知好渺小（能力也是，一時之間不知道可不可以吸收完這些大神的精華？AI 目前在程式開發的應用，所增進的開發體驗有限，但未來的發展可以說是指日可待，會不會哪一天就不需要工程師了？哇～原來別的開發團隊原來都是利用這些 CICD工具去提升開發的效率，增進團隊溝通，為啥自己待的開發團隊什麼都沒做？
+
+---
+
+## 收穫
+
+### 前端工程師的不同樣貌
+
+雖然職稱都掛著前端工程師，但每一個前端工程師所著重的技術都不太一樣，在這次議程的主講者中，有的就是著重於網頁互動設計、WebGL、動態特效 ; 有的著重於 Frontend Infra 前端基礎建設，也就是前端架構師 ; 有的則是網頁產品開發 ; 我自己也算是個蠻異類的前端，主要的技能樹都點在 React Native APP 跨平台開發。
+
+### 開發者體驗(Dev Experience)的重要性
+
+兩天的議程下來，不同的講者分別都強調了開發者體驗的重要性，很多時候我們在開發產品時很重視使用者體驗(User Experience)，往往忽略了開發者體驗(Dev Experience) ，然而開發者體驗可以帶給開發團隊的好處是提升開發效率和產品產量，當然也可以減少重複造輪子。在 Kyle 和 PJ 的分享中分享了不少關於如何在產品開發的過程中加入工具去提升團隊開發的品質，例如：CI/CD pipeline 優化的工具、利用透過 Script 或 Hooks 去自動化團隊專案的 Coding Style 讓機器人去擋下不符合規範的提交，也可以減少直接對人糾正的尷尬。在 Summer 的分享中則是怎麼樣去衡量網頁效能，並且利用 Sentry 去追蹤與記錄問題、觀察使用者的操作情況，進而打造一個自動化的效能系統，提升產品的穩定度。（以上的內容都很精彩，詳細的分享文章我整理在下方。）
+
+不過，要如何去應用這些工具和制定流程，主要還是要看開發團隊的文化和業務情況，依照不同的情境導入相對合適的工具，才會對整體開發體驗產生良好的影響，否則就失去了提升開發效率的美意了。
+我也要好好的去思考有哪些工具可以放入我的專案中了～
+
+### 前端技術迭代速度好快，快到學不動了
+
+剛轉職時有寫過一段時間的 Vue2 + Vuex ，後來都在寫 React 就快把 Vue 忘光了，趁著這次 Kuro 分享 Vue.js 的狀態管理模式，稍微的快速複習了 Vue ，發現 Vue 3 的 compostion api 在處理狀態和重用邏輯的部分與 React 的 hook 相似，看起來貌似比 Vue2 好寫多了。在狀態管理的部分以前用 Vuex 處理全域狀態都要透過從 Vuex 的 store state 拿出存放資料拿出來至vue compomnent => 若有非同步處理則還需要從 compomnent 更新觸發 Action =>Action 函數中調用 commit 方法來觸發 Mutations=> 更新 Vuex 中的狀態，一連串的要更新一個狀態需要很多繁瑣的步驟，反之，在 Vue 3 官文文件中直接將全域的狀態更新工具改成了 Pinia ，語法操作更簡單，取消了 mutation，跟 TypeScript 整合度更好。真是感嘆前端技術迭代太快了～沒想到不到兩年的時間又有更新更好用的東西，也不知道多久後又會有新的技術出來取而代之呢？
+
+剛好聽到幾個講者在講十年前專精於 Flash 的技術（老實說我是第一次聽到，原來十年前的前端是要點的技能是這個），但現在的瀏覽器的都不支援了，就更有感。或許，身為開發者都要有這樣的覺悟：這一行本來就是沒辦法只學某幾種技術就能一輩子以此為生，也不是說舊的技術不好，一定會有公司需要人維護（除非就像 flash 死透了），但如果能 open mind 去學習新的技術，在職涯的路上選擇會比較寬闊。
+
+### 原生 HTML element + Web api + CSS 就很好用
+
+做表單 Form 一直是我覺得前端處理很麻煩的部分，又要透過 DOM 取值做資料驗證，又要顧及使用者體驗。Paul 在分享中，展示了許多用 HTML 原生 element 、CSS 、web api 的就可以處理的功能。例如：
+
+- [CSS: accent-color](https://developer.mozilla.org/en-US/docs/Web/CSS/accent-color) 可以直接改某些 HTML element 的顏色
+
+```html title="HTML"
+<input type="checkbox" />
+<input type="range" />
+<progress></progress>
+```
+
+- form 驗證可以使用[ValidityState web api](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState)處理
+
+- [CSS > :has()](https://developer.mozilla.org/en-US/docs/Web/CSS/:has)可以判斷是否顯示 element ，不需要透過 Javascript event 監聽
+
+HTML 本身的屬性就可以做到基本 Type 檢查，搭配 Web api ，就可以避免使用 Javascript 去處理，減少效能浪費，更讚的是，可以輕鬆的延續使用者的體驗。
+
+---
+
+## 逛攤位的戰利品
+
+![](./20230811_132426.JPG)
+
+我蠻喜歡去搜集貼紙的，趁機搜刮了一些貼紙～還在六角的攤位玩了一個心理測驗，測出來的結果是：
+
+![](./20230811_130550.jpg)
+
+![](./20230813_165751.jpg)
+
+在天瓏的攤位用便宜的價錢入手了這本書，對這本書的印象是在星巴哥的技術專欄上看到有關這本書重構技巧的分享，希望我有時間可以看完它。
+
+---
+
+最後，分享覺得整場最有道理的一句話：
+
+## ![](./20230811_155716.jpg)
+
+---
+
+## 講者分享連結整理
+
+- [大會共筆](https://hackmd.io/@webconf/BkImQ0Ds3/%2FwHBNj8NPQamxPecU9VXoHQ)
+
+- [Will 保哥/活用 GitHub Copilot 開發 Web 應用程式 PPT](https://drive.google.com/file/d/1W7KZ2vwsZyyIC_iMdCxgadXWodWkrU6u/view?fbclid=IwAR0lAS-jXIksFcd08w9gGWJnZGPvHKTN_7n_z1fQDf8koHyQ52EiRawRpmk)
+
+- [Ruddy 老師/AI 驅動下的開發者體驗 PPT](https://onedrive.live.com/?authkey=%21APB1fAuO9FcMusg&id=68B24674607C69D9%21349589&cid=68B24674607C69D9)
+
+- [奶綠茶/WebComponent 的好，用過的都知道 PPT](https://speakerdeck.com/milkmidi/webcomponent)
+- [莫力全(Kyle Mo)/成為前端建築師吧！透過 Frontend Infra 為前端應用打造穩健且高效率的開發體驗 PPT](https://slides.com/oldmo860617/minimal)、[文章](https://oldmo860617.medium.com/%E6%88%90%E7%82%BA%E5%89%8D%E7%AB%AF%E5%BB%BA%E7%AF%89%E5%B8%AB%E5%90%A7-%E9%80%8F%E9%81%8E-frontend-infra-%E7%82%BA%E5%89%8D%E7%AB%AF%E6%87%89%E7%94%A8%E6%89%93%E9%80%A0%E7%A9%A9%E5%81%A5%E4%B8%94%E9%AB%98%E6%95%88%E7%8E%87%E7%9A%84%E9%96%8B%E7%99%BC%E9%AB%94%E9%A9%97-21566b5c95d3)
+- [李明/穿越互動特效網站演化的軌跡 參考文章](https://blockstudio.tw/blog/blog-web-animation-sop)
+- [Paul Li / 鳳‧極意？！](https://blog.lalacube.com/mei/Reveal_phoenix_the_gokui.php?page=1)
+- [Summer Tang/從零打造前端效能監測系統逐字稿](https://www.cythilya.tw/2023/08/12/build-front-end-performance-monitoring-mechanism-from-scratch-webconf-tw-2023/)
+- [小賴/【工作坊】Docker Container 是什麼？可以吃嗎？](https://hackmd.io/@webconf/BkImQ0Ds3/%2FhOq4Qte_TnSy0z8-dcCuig?utm_source=badge&utm_medium=badge&utm_campaign=webconf2023&fbclid=IwAR2DzggADz_M6lyBoJl8Bd87iJmjTYbzJeFvL-wJj3k3YuuszgxdmwSc4rc)
+- [Soking/資訊架構設計新體驗：在需求情境中運用領域事件分析描述結構化內容](https://drive.google.com/file/d/1MXtx08mLPB4_VTRmMr6Bp9pRKY3V2fWm/view?ck_subscriber_id=2283616400&pli=1)
+  以上是我自己有聽的場次＆講者有分享資料的
+
+:::note
+
+本篇文章原先發佈於[Medium](https://wwwwwwwe.medium.com/2023-web-conf-%E5%BF%83%E5%BE%97%E8%88%87%E6%94%B6%E7%A9%AB-e1dba2cb5909)，之後會陸續將 Medium 撰寫的內容慢慢遷移到這個網站。
