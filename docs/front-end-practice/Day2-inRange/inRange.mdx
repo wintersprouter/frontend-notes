@@ -1,0 +1,114 @@
+---
+## sidebar_position: 2
+
+### Day 2. `Easy` 手寫 inRange
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+🔸 **題目描述**
+
+請實作一個函式 `inRange` 。此函式接受三個參數：
+
+- `value`：要檢查的數值
+- `start`：範圍的下限 (範圍包含 `start`)，預設為 0
+- `end`：範圍的上限 (範圍不包含 `end`)
+
+在實作時，要同時考量以下條件：
+
+- 預設行為：如果僅提供兩個參數，則第二個參數被視為 `end`，而 `start` 此時預設為 0，這樣會讓使用該函式的人，在正數範圍內能更簡易地使用
+- 負數範圍：如果 `start` 大於 `end`，`inRange` 會交換參數以正確處理負數範圍，確保在正負數都能被處理
+- 輸出：`inRange` 函式輸出會是一個 `Boolean`
+
+```
+inRange(3, 2, 4)  // => true
+inRange(4, 8)     // => true
+inRange(4, 2)     // => false
+inRange(2, 2)     // => false
+inRange(1.2, 2)   // => true
+```
+
+## Tests
+
+```js title="test.ts"
+import { describe, expect, test } from "@jest/globals";
+import inRange from "./inRange";
+
+describe("inRange", () => {
+  test("returns true when value is within the range", () => {
+    expect(inRange(3, 2, 4)).toBe(true);
+    expect(inRange(4, 8)).toBe(true);
+  });
+
+  test("returns false when value is outside the range", () => {
+    expect(inRange(4, 2)).toBe(false);
+    expect(inRange(2, 2)).toBe(false);
+  });
+
+  test("handles negative ranges correctly", () => {
+    expect(inRange(-3, -2, -4)).toBe(true);
+    expect(inRange(-4, -2)).toBe(false);
+    expect(inRange(-2, -2)).toBe(true);
+    expect(inRange(-1, -2)).toBe(true);
+  });
+
+  test("handles decimal values correctly", () => {
+    expect(inRange(1.2, 2)).toBe(true);
+    expect(inRange(1.2, 0.5, 1)).toBe(false);
+  });
+});
+```
+
+## Solutions
+
+<Tabs>
+  <TabItem value="solution1" label="解法一">
+    ```ts title="solution1.js"
+    function inRange(value, start, end = 0) {
+        return value >= Math.min(start, end) && value < Math.max(start, end)
+    }
+    //Math.min(start, end) 會返回 start 和 end 中的最小值。如果 value 大於或等於這個最小值，那麼 value 就不會低於範圍的下限。
+//Math.max(start, end) 會返回 start 和 end 中的最大值。如果 value 小於這個最大值，那麼 value 就不會超過範圍的上限。
+export default inRange;
+```
+
+  </TabItem>
+
+  <TabItem value="solution2" label="解法二">
+    ```ts title="solution2.js"
+    function inRange(value: number, start: number = 0, end?: number): boolean {
+    // 如果只提供了兩個參數，則將第二個參數視為 `end`，並將 `start` 設為 0
+    if (end === undefined) {
+        end = start;
+        start = 0;
+    }
+
+    // 如果 `start` 大於 `end`，則交換 `start` 和 `end`
+    if (start > end) {
+    [start, end] = [end, start];
+    }
+
+    // 檢查 `value` 是否在範圍內
+    return value >= start && value < end;
+    }
+    export default inRange;
+    ```
+
+</TabItem>
+<TabItem value="solution3" label="解法三">
+  ```ts title="solution3.js"
+    function inRange(value: number, start: number, end = 0): boolean {
+    if (start > end) {
+        if (value >= end && value < start) {
+        return true;
+        }
+    } else if (value >= start && value < end) {
+        return true;
+    }
+    return false;
+    }
+    export default inRange;
+    ```
+</TabItem>
+</Tabs>
