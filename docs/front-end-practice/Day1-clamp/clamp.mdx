@@ -1,0 +1,80 @@
+---
+## sidebar_position: 1
+
+### Day 1. `Easy` 手寫 clamp
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+🔸 **題目描述**
+
+你正在開發一個處理數值資料的系統。請寫一個名為 `clamp` 的函式，它需要三個參數：
+
+- 一個數值 `number`
+- 一個最小值 `lower`
+- 一個最大值 `upper`
+
+此函式應確保輸出的 `number` 始終落在指定的範圍内，包括最小值和最大值本身。你會如何實作這個 `clamp` 呢?
+
+```
+// 在範圍中，返回原值
+clamp(7, 0, 9); // => 7
+
+// 小於 lower，返回 lower
+clamp(-12, -4, 5); // => -4
+
+// 大於 upper，返回 upper
+clamp(18, 3, 9); // => 9
+```
+
+## Tests
+
+```js title="test.ts"
+import { expect, test } from "@jest/globals";
+import clamp from "./clamp";
+
+test("should return the input number when it is within the specified range", () => {
+  expect(clamp(7, 0, 9)).toBe(7);
+  expect(clamp(3, -5, 5)).toBe(3);
+  expect(clamp(-2, -10, 10)).toBe(-2);
+});
+
+test("should return the lower bound when the input number is less than the lower bound", () => {
+  expect(clamp(-5, 0, 9)).toBe(0);
+  expect(clamp(-10, -5, 5)).toBe(-5);
+  expect(clamp(-15, -10, 10)).toBe(-10);
+});
+
+test("should return the upper bound when the input number is greater than the upper bound", () => {
+  expect(clamp(10, 0, 9)).toBe(9);
+  expect(clamp(6, -5, 5)).toBe(5);
+  expect(clamp(15, -10, 10)).toBe(10);
+});
+```
+
+## Solutions
+
+<Tabs>
+  <TabItem value="solution1" label="解法一">
+    ```ts title="solution1.js"
+    function clamp(number: number, lower: number, upper: number) {
+    if (number < lower) {
+        return lower;
+    } else if (number > upper) {
+        return upper;
+    } else {
+        return number;
+    }
+    ```
+  </TabItem>
+
+  <TabItem value="solution2" label="解法二">
+    ```ts title="solution2.js"
+    function clamp(number: number, lower: number, upper: number) {
+      return Math.min(upper, Math.max(lower, number));
+    }
+    //使用 Math.max 函數來確保數值不會低於下限，然後使用 Math.min 函數來確保數值不會超過上限
+    ```
+</TabItem>
+</Tabs>
