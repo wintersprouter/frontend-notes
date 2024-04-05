@@ -1,0 +1,87 @@
+---
+## sidebar_position: 3
+
+### Day 3. `Easy` 手寫 compact
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+🔸 **題目描述**
+
+請實作一個 `compact` 效用函式。 `compact` 能將輸入的陣列中的 `false`、`null`、0、空字串、`undefined` 和 NaN 都去除，並輸出一個新的陣列。請實作此 `compact` 函式。
+
+```js
+// 範例一
+compact([0, 1, false, 2, "", 3, "hello"]);
+// => [1, 2, 3, 'hello']
+
+// 範例二
+compact([null, undefined, NaN, " "]);
+// =>[' ']
+
+// 範例三
+compact([{ name: "Alice" }, null, { age: 30 }, undefined]);
+// =>[{ name: 'Alice' }, { age: 30 }]
+```
+
+## Tests
+
+```js title="test.ts"
+import { describe, expect, test } from "@jest/globals";
+import compact from "./compact";
+
+describe("compact", () => {
+  test("removes all falsy values from the array", () => {
+    expect(compact([0, 1, false, 2, "", 3, "hello"])).toEqual([
+      1,
+      2,
+      3,
+      "hello",
+    ]);
+    expect(compact([null, undefined, NaN, " "])).toEqual([" "]);
+    expect(compact([{ name: "Alice" }, null, { age: 30 }, undefined])).toEqual([
+      { name: "Alice" },
+      { age: 30 },
+    ]);
+  });
+
+  test("does not remove non-falsy values", () => {
+    expect(compact([1, 2, 3])).toEqual([1, 2, 3]);
+    expect(compact(["hello", "world"])).toEqual(["hello", "world"]);
+    expect(compact([{ name: "Alice" }, { age: 30 }])).toEqual([
+      { name: "Alice" },
+      { age: 30 },
+    ]);
+  });
+});
+```
+
+## Solutions
+
+<Tabs>
+  <TabItem value="solution1" label="解法一">
+    ```ts title="solution1.ts"
+    const compact = <T>(arr: T[]): T[] => {
+        return arr.filter(Boolean);
+        //false、null、0、空字串、undefined 和 NaN 都是 falsy value
+    };
+    export default compact;
+    ````
+  </TabItem>
+
+  <TabItem value="solution2" label="解法二">
+    ```ts title="solution2.ts"
+    function compact(array: T[]) : T[] {
+    const result = []
+    for (const value of array) {
+        if (value) {
+        result.push(value)
+        }
+    }
+    return result
+    }
+    export default compact;
+    ```
+    </TabItem>
+</Tabs>
