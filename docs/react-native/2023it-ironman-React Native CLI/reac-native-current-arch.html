@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.2.1">
 <title data-rh="true">解析 React Native 現行架構（Current Architecture）原理 | Front End 筆記</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://wintersprouter.github.io/frontend-notes/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://wintersprouter.github.io/frontend-notes/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://wintersprouter.github.io/frontend-notes/docs/react-native/2023it-ironman-React Native CLI/reac-native-current-arch"><meta data-rh="true" property="og:locale" content="zh_TW"><meta data-rh="true" name="docusaurus_locale" content="zh-TW"><meta data-rh="true" name="docsearch:language" content="zh-TW"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="解析 React Native 現行架構（Current Architecture）原理 | Front End 筆記"><meta data-rh="true" name="description" content="長久以來，React Native 的效能問題一直為人詬病，為了解決這個問題，React Native 開發團隊針對舊有的架構進行了重構，並在 0.68 版本推出了新架構（New Architecture）。接下來，我會分享原來的架構是 Javascript 如何與 natvie 溝通，究竟面臨了什麼問題？讓 React Native 開發團隊決定重構。"><meta data-rh="true" property="og:description" content="長久以來，React Native 的效能問題一直為人詬病，為了解決這個問題，React Native 開發團隊針對舊有的架構進行了重構，並在 0.68 版本推出了新架構（New Architecture）。接下來，我會分享原來的架構是 Javascript 如何與 natvie 溝通，究竟面臨了什麼問題？讓 React Native 開發團隊決定重構。"><link data-rh="true" rel="icon" href="/frontend-notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://wintersprouter.github.io/frontend-notes/docs/react-native/2023it-ironman-React Native CLI/reac-native-current-arch"><link data-rh="true" rel="alternate" href="https://wintersprouter.github.io/frontend-notes/docs/react-native/2023it-ironman-React Native CLI/reac-native-current-arch" hreflang="zh-TW"><link data-rh="true" rel="alternate" href="https://wintersprouter.github.io/frontend-notes/docs/react-native/2023it-ironman-React Native CLI/reac-native-current-arch" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/frontend-notes/blog/rss.xml" title="Front End 筆記 RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/frontend-notes/blog/atom.xml" title="Front End 筆記 Atom Feed"><link rel="stylesheet" href="/frontend-notes/assets/css/styles.841e3ebb.css">
-<script src="/frontend-notes/assets/js/runtime~main.61c4be10.js" defer="defer"></script>
+<script src="/frontend-notes/assets/js/runtime~main.4690a607.js" defer="defer"></script>
 <script src="/frontend-notes/assets/js/main.3427eb8e.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -32,7 +32,7 @@ Apple 開發的 JS Engine，較舊版本的 React Native 會使用這個引擎�
 <h1>React Native 利用三個主要執行緒（threads）進行運作</h1>
 <ul>
 <li>UI Thread/ Native Thread：
-是 UI Manager 負責處理用戶的介面操作 Andriod 跟 iOS 畫面的渲染邏輯，以及調用原生 api、運行原生模組。</li>
+是 UI Manager 負責處理用戶的介面操作 Andriod 跟 iOS 畫面的渲染邏輯，以及呼叫原生 api、運行原生模組。</li>
 <li>JavaScript Thread:
 主要是 JS Engine 使用，負責運行 JS Bundle 中的 JavaScript 程式碼，處理邏輯。</li>
 <li>Shadow thread:
@@ -42,7 +42,7 @@ Apple 開發的 JS Engine，較舊版本的 React Native 會使用這個引擎�
 <p><img decoding="async" loading="lazy" src="https://ithelp.ithome.com.tw/upload/images/20230924/20162496DhGCCLaxPg.png" alt="https://ithelp.ithome.com.tw/upload/images/20230924/20162496DhGCCLaxPg.png" class="img_ev3q"></p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="現行架構運作的流程">現行架構運作的流程<a href="#現行架構運作的流程" class="hash-link" aria-label="現行架構運作的流程的直接連結" title="現行架構運作的流程的直接連結">​</a></h2>
 <p>react 經過 Metro 打包編譯後產生 JS Bundle，JS Bundle 在 JavaScriptcore （JavaScript 引擎）的環境下執行，JavaScript 的程式碼與原生的程式碼透過 <strong>橋接（Bridge）</strong> 的方式溝通。</p>
-<p>橋接（Bridge）是如何進行溝通呢？ 原生模組（Native module） 透過 Bridge 封裝成 JavaScript 接口提供給 JavaScript 引擎調用 Native 的方法。</p>
+<p>橋接（Bridge）是如何進行溝通呢？ 原生模組（Native module） 透過 Bridge 封裝成 JavaScript 接口提供給 JavaScript 引擎呼叫 Native 的方法。</p>
 <p>Native 與 JavaScript 之間溝通的方法是使用非同步的 JSON 序列化與反序列化方式去傳遞與轉換資料，也就是 JS thread 會傳送以 JSON 序列化的訊息並且以字串符發送到 Bridge，Bridge 會優化這個訊息並且傳遞到 UI Thread/ Native Thread，UI Thread/ Native Thread 收後解密這條訊息，然後根據這條訊息去執行原生的程式碼。</p>
 <p>當應用程式啟動時，UI Manager 會下載所有的原生模組，React 會在 JavaScript Thread 執行產生 React Element Tree ，一旦渲染時就會透過 Bridge 發佈變更的指令到 Shadow Thread，創造 React Shadow Tree （似 React Virtual DOM 功能），顯示應用程序的 UI 的佈局和結構來比對 UI 需進行哪些更改，然後透過 yoga 引擎去計算 UI 元素在原生螢幕的位置和大小，一旦 Yoga 完成布局計算，React Native 的 UI Manager 就會將使用原生平台特  定的 API 轉換成原生的 Host View Tree 並且通知 UI Thread 使用原生元素在用戶的螢幕上呈現變更後的 UI。</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="現行架構使用橋接bridge存在的一些問題">現行架構使用橋接（Bridge）存在的一些問題<a href="#現行架構使用橋接bridge存在的一些問題" class="hash-link" aria-label="現行架構使用橋接（Bridge）存在的一些問題的直接連結" title="現行架構使用橋接（Bridge）存在的一些問題的直接連結">​</a></h2>

@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.2.1">
 <title data-rh="true">解析 React Native 新架構（New Architecture） 原理 | Front End 筆記</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://wintersprouter.github.io/frontend-notes/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://wintersprouter.github.io/frontend-notes/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://wintersprouter.github.io/frontend-notes/docs/react-native/2023it-ironman-React Native CLI/reac-native-new-arch"><meta data-rh="true" property="og:locale" content="zh_TW"><meta data-rh="true" name="docusaurus_locale" content="zh-TW"><meta data-rh="true" name="docsearch:language" content="zh-TW"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="解析 React Native 新架構（New Architecture） 原理 | Front End 筆記"><meta data-rh="true" name="description" content="在 DAY20 解析 React Native 現行架構（Current Architecture）原理 理解了現行架構使用橋接（bridge）溝通的缺點後，接著就要了解現行架構 React Native 開發團隊如何改進？在新的架構中又如何加強與原生模組的通訊？"><meta data-rh="true" property="og:description" content="在 DAY20 解析 React Native 現行架構（Current Architecture）原理 理解了現行架構使用橋接（bridge）溝通的缺點後，接著就要了解現行架構 React Native 開發團隊如何改進？在新的架構中又如何加強與原生模組的通訊？"><link data-rh="true" rel="icon" href="/frontend-notes/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://wintersprouter.github.io/frontend-notes/docs/react-native/2023it-ironman-React Native CLI/reac-native-new-arch"><link data-rh="true" rel="alternate" href="https://wintersprouter.github.io/frontend-notes/docs/react-native/2023it-ironman-React Native CLI/reac-native-new-arch" hreflang="zh-TW"><link data-rh="true" rel="alternate" href="https://wintersprouter.github.io/frontend-notes/docs/react-native/2023it-ironman-React Native CLI/reac-native-new-arch" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/frontend-notes/blog/rss.xml" title="Front End 筆記 RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/frontend-notes/blog/atom.xml" title="Front End 筆記 Atom Feed"><link rel="stylesheet" href="/frontend-notes/assets/css/styles.841e3ebb.css">
-<script src="/frontend-notes/assets/js/runtime~main.61c4be10.js" defer="defer"></script>
+<script src="/frontend-notes/assets/js/runtime~main.4690a607.js" defer="defer"></script>
 <script src="/frontend-notes/assets/js/main.3427eb8e.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -19,8 +19,8 @@
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="jsi-javascript-interface">JSI （JavaScript Interface）<a href="#jsi-javascript-interface" class="hash-link" aria-label="JSI （JavaScript Interface）的直接連結" title="JSI （JavaScript Interface）的直接連結">​</a></h3>
 <p>一個輕量的 API，可以用於任何 JavaScript virtual machine，讓不同的平台可以用不同的 JavaScript 引擎。
 JSI 是用 C++ 寫的，它將 JavaScript 引擎嵌入 C++ 應用程式中。</p>
-<p>透過 JSI 可以直接讓 JavaScript 程式碼調用原生程式碼的函數，獲取原生對象的引用，然後同步地使用這些引用來訪問原生功能，不需要使用 JSON 序列化轉換資料的過程，就可以提升溝通效率。</p>
-<p>例如，想要打開手機的相機，就可以透過 JavaScript 去調用原生拍照的 Api ，打開相機的這項任務就會在原生程式碼中執行。</p>
+<p>透過 JSI 可以直接讓 JavaScript 程式碼呼叫原生程式碼的函數，獲取原生對象的引用，然後同步地使用這些引用來訪問原生功能，不需要使用 JSON 序列化轉換資料的過程，就可以提升溝通效率。</p>
+<p>例如，想要打開手機的相機，就可以透過 JavaScript 去呼叫原生拍照的 Api ，打開相機的這項任務就會在原生程式碼中執行。</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="fabric">Fabric<a href="#fabric" class="hash-link" aria-label="Fabric的直接連結" title="Fabric的直接連結">​</a></h3>
 <p>Fabric 是新的 UI 渲染系統，旨在提升框架與主機平台（host platforms：原生端的平台）互用性、加強 JavaScript 與原生線程的溝通。</p>
 <p>Fabric 向 JavaScript 提供了本身的函式，使用 JSI 讓 Hermes 跟原生端（C++ core）透過 ref functions 直接溝通。</p>
@@ -42,7 +42,7 @@ JSI 是用 C++ 寫的，它將 JavaScript 引擎嵌入 C++ 應用程式中。</p
 <li>Turbo Module 直接透過 JSI 與 JavaScript 溝通。</li>
 <li>JavaScript 中的 React 元件將會透過 Fabric 去渲染原生 UI 畫面，同時 Fabric 也是使用 JSI 跟原生模組、JavaScript 溝通。</li>
 <li>Fabric 會使用 Yoga 引擎去計算使用者介面的佈局。</li>
-<li>Fabric 使用 Fabric Renderer 在使用者螢幕上繪製用戶介面元素，並且調用原生圖形 API 去處理手勢、動畫..等功能。</li>
+<li>Fabric 使用 Fabric Renderer 在使用者螢幕上繪製用戶介面元素，並且呼叫原生圖形 API 去處理手勢、動畫..等功能。</li>
 </ol>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="新架構的改變">新架構的改變<a href="#新架  構的改變" class="hash-link" aria-label="新架構的改變的直接連結" title="新架構的改變的直接連結">​</a></h2>
 <ul>
