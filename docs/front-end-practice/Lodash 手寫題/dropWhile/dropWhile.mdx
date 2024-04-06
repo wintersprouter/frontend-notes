@@ -1,0 +1,112 @@
+---
+## sidebar_position: 5
+
+### Day 5. `Easy` 手寫 dropWhile
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+🔸 **題目描述**
+
+請實作一個 `dropWhile` 函式。此函式接受兩個參數，第一個是參數是一個陣列，它可以是任何類型的陣列；第二個是一個 predicate 函式，會接受陣列中的元素，如果返回為真，則表示該元素應該被丟棄，直到返回的不為真則停止。
+
+`dropWhile` 會回傳一個新的陣列，且不應改動到原始陣列。回傳的陣列從原始陣列的第一個不滿足 predicate 條件的元素開始，直到陣列中的最後一個元素，若每個元素皆滿足 predicate 函式，則回傳空陣列。
+
+```js
+// 範例一
+dropWhile([1, 2, 3, 4, 5, 6], (value) => value < 4);
+// => [4, 5, 6]
+
+// 範例二
+dropWhile([0, 1, 2], (value) => value < 5);
+// => []
+
+// 範例三
+dropWhile([0, 6, 1, 2], (value) => value < 5);
+// => [6, 1, 2]
+```
+
+## Tests
+
+```js
+import { describe, expect, test } from "@jest/globals";
+import dropWhile from "./dropWhile";
+
+describe("dropWhile", () => {
+  test("drops elements while predicate is true", () => {
+    const result = dropWhile([1, 2, 3, 4, 5, 6], (value) => value < 4);
+    expect(result).toEqual([4, 5, 6]);
+  });
+
+  test("returns empty array if all elements satisfy the predicate", () => {
+    const result = dropWhile([0, 1, 2], (value) => value < 5);
+    expect(result).toEqual([]);
+  });
+
+  test("stops dropping when predicate is false", () => {
+    const result = dropWhile([0, 6, 1, 2], (value) => value < 5);
+    expect(result).toEqual([6, 1, 2]);
+  });
+
+  test("does not mutate the original array", () => {
+    const original = [1, 2, 3, 4, 5, 6];
+    const copy = [...original];
+    dropWhile(original, (value) => value < 4);
+    expect(original).toEqual(copy);
+  });
+});
+```
+
+## Solutions
+
+<Tabs>
+  <TabItem value="solution1" label="解法一">
+    ```js
+    function dropWhile(array: any[], predicate: (value: any) => boolean): any[] {   
+        //findIndex() 方法返回符合條件的第一個元素的索引，如果沒有找到符合條件的元素，則返回 -1
+        const dropIndex = array.findIndex((value) => !predicate(value));
+        
+        //slice 方法從該索引開始創建一個新的陣列
+        return dropIndex === -1 ? [] : array.slice(dropIndex);
+    }
+    ```
+  </TabItem>
+
+  <TabItem value="solution2" label="解法二">
+    ```js
+      function dropWhile(array, predicate) {
+         //追蹤當前正在檢查的元素的索引
+        let index = 0;
+
+        //這個 while 迴圈會持續執行，直到已經檢查了所有的元素或者找到了第一個不滿足條件的元素）
+        while (index < array.length && predicate(array[index], index, array)) {
+            index++;
+        }
+
+        return array.slice(index);
+    }
+    ```
+
+</TabItem>
+
+  <TabItem value="solution3" label="解法三">
+    ```js
+      function dropWhile(array, predicate) {
+        //追蹤已經丟棄的元素的數量
+        let droppedCount = 0;
+
+        for (let i = 0; i < array.length; i++) {
+            if (!predicate(array[i], i, array)) {
+            //一旦找到了第一個不滿足 predicate 函數的元素，迴圈就會停止，不會再檢查後面的元素
+            break;
+            }
+            droppedCount++;
+        }
+
+        return array.slice(droppedCount);
+    }
+    ```
+    </TabItem>
+
+</Tabs>
