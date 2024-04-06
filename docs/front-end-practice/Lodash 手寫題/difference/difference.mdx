@@ -1,0 +1,72 @@
+---
+## sidebar_position: 4
+
+### Day 4. `Easy` 手寫 difference
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+🔸 **題目描述**
+
+請實作一個名為 `difference` 的函式，該函式接收兩個陣列作為參數。函式的功能是回傳只在第一個陣列中存在、在第二個陣列中不存在的元素，並且避免對重複值進行多餘的操作。
+
+```
+difference([], [])                   // []
+difference([1, 1, 2, 3], [2, 3])     // [1, 1]
+difference([1, 2, 3], [1, 2, 3, 4])	 // []
+difference([4, 3, 2, 1], [1, 2, 3]); // [4]
+```
+
+## Tests
+
+```js
+import { describe, expect, test } from "@jest/globals";
+import difference from "./difference";
+
+describe("difference", () => {
+  test("returns elements only present in the first array", () => {
+    expect(difference([], [])).toEqual([]);
+    expect(difference([1, 1, 2, 3], [2, 3])).toEqual([1, 1]);
+    expect(difference([1, 2, 3], [1, 2, 3, 4])).toEqual([]);
+    expect(difference([4, 3, 2, 1], [1, 2, 3])).toEqual([4]);
+  });
+});
+```
+
+## Solutions
+
+<Tabs>
+  <TabItem value="solution1" label="解法一">
+    ```js
+    function difference(array: any[], values: any[]): any[] {
+        const result = [];
+        for (const element of array) {
+            if (!values.includes(element)) {
+                result.push(element);
+            }
+        }
+        return result;
+    }
+    ````
+  </TabItem>
+
+  <TabItem value="solution2" label="解法二">
+    ```js
+      function difference(array: any[], values: any[]) {
+        return array.filter((item: any) => !values.includes(item));
+      }
+    ```
+    </TabItem>
+
+  <TabItem value="solution3" label="解法三">
+    ```js
+      function difference(array: any[], values: any[]): any[] {
+        const valuesSet = new Set(values);
+        //將 values 轉換為一個 Set。Set 是一種數據結構，它存儲的元素都是唯一的，並且 Set 提供了一個 has 方法，可以用來快速檢查一個元素是否存在於 Set 中。
+        return array.filter((value) => !valuesSet.has(value));
+        //由於 Set.has 方法的時間複雜度是 O(1)，適合處理非常大的 values 陣列
+        }
+    ```
+    </TabItem>
+</Tabs>
