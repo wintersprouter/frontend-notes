@@ -33,7 +33,7 @@
 # React Native 利用三個主要執行緒（threads）進行運作
 
 - UI Thread/ Native Thread：
-  是 UI Manager 負責處理用戶的介面操作 Andriod 跟 iOS 畫面的渲染邏輯，以及調用原生 api、運行原生模組。
+  是 UI Manager 負責處理用戶的介面操作 Andriod 跟 iOS 畫面的渲染邏輯，以及呼叫原生 api、運行原生模組。
 - JavaScript Thread:
   主要是 JS Engine 使用，負責運行 JS Bundle 中的 JavaScript 程式碼，處理邏輯。
 - Shadow thread:
@@ -47,7 +47,7 @@
 
 react 經過 Metro 打包編譯後產生 JS Bundle，JS Bundle 在 JavaScriptcore （JavaScript 引擎）的環境下執行，JavaScript 的程式碼與原生的程式碼透過 **橋接（Bridge）** 的方式溝通。
 
-橋接（Bridge）是如何進行溝通呢？ 原生模組（Native module） 透過 Bridge 封裝成 JavaScript 接口提供給 JavaScript 引擎調用 Native 的方法。
+橋接（Bridge）是如何進行溝通呢？ 原生模組（Native module） 透過 Bridge 封裝成 JavaScript 接口提供給 JavaScript 引擎呼叫 Native 的方法。
 
 Native 與 JavaScript 之間溝通的方法是使用非同步的 JSON 序列化與反序列化方式去傳遞與轉換資料，也就是 JS thread 會傳送以 JSON 序列化的訊息並且以字串符發送到 Bridge，Bridge 會優化這個訊息並且傳遞到 UI Thread/ Native Thread，UI Thread/ Native Thread 收後解密這條訊息，然後根據這條訊息去執行原生的程式碼。
 

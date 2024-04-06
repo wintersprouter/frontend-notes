@@ -14,7 +14,7 @@ DOM (Document Object Model) 是一個網頁樹狀資料結構的物件，用來�
 
 ## Virtual DOM
 
-因此為了縮小操作 DOM 的範圍 Virtual DOM 的概念就產生了，簡單來說，Virtual DOM 就是一個虛擬的畫面結構，同時也是描述真實的 DOM 結構。他本身就是由一個個的 Dom 元素是 Javascript 物件，進而組成的樹狀結構。
+為了縮小操作 DOM 的範圍 Virtual DOM 的概念就產生了，簡單來說，Virtual DOM 就是一個虛擬的畫面結構，同時也是描述真實的 DOM 結構。它本身就是由一個個的 DOM 元素組成的樹狀結構，而 DOM 元素的本身就是 Javascript 物件。
 
 與 DOM 的關係，可以比喻成 Virtual DOM 是 DOM 的試做品，在更新 DOM 之前，先產生開發者期望中虛擬的畫面結構，然後再用這個虛擬的畫面結構去實際操作 DOM 。
 
@@ -24,8 +24,9 @@ DOM (Document Object Model) 是一個網頁樹狀資料結構的物件，用來�
 
 1. 根據資料產生一組新的 Virtual DOM 結構
 2. 將新的 Virtual DOM 結構與舊的 Virtual DOM 結構做比較
-3. 新舊之間差異的部分更新在真實的 DOM 上
-4. 瀏覽器的渲染引擎會自動重繪畫面
-5. 若新舊的 Virtual DOM 結構一樣，則不會重繪畫面
+3. 比較新舊之間差異的部分
+4. 將差異的部分更新在真實的 DOM 上
+5. 瀏覽器的渲染引擎會自動重繪畫面
+6. 若新舊的 Virtual DOM 結構一樣，則不會更新 DOM 結構，因此也不會重繪畫面
 
-這樣的做的好處可以，縮小操作 DOM 的範圍，只需要操作真正需要更新的 DOM 元素，可以大大的降低效能的負擔，另外，使用 Virtual DOM 的另一個好處是，Virtual DOM 並不會向真實的 DOM 與瀏覽器的渲染引擎做綁定，產生的 JavaScript 物件較為單純，也因此節省了效能。
+這樣的做的好處可以，縮小操作 DOM 的範圍，只需要操作真正需要更新的 DOM 元素，可以大大的降低效能的負擔，另外，使用 Virtual DOM 的好處是：Virtual DOM 並不會向真實的 DOM 與瀏覽器的渲染引擎做綁定，因此產生的 JavaScript 物件較為單純，也因此節省了效能。

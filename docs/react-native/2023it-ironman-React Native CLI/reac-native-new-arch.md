@@ -22,9 +22,9 @@
 一個輕量的 API，可以用於任何 JavaScript virtual machine，讓不同的平台可以用不同的 JavaScript 引擎。
 JSI 是用 C++ 寫的，它將 JavaScript 引擎嵌入 C++ 應用程式中。
 
-透過 JSI 可以直接讓 JavaScript 程式碼調用原生程式碼的函數，獲取原生對象的引用，然後同步地使用這些引用來訪問原生功能，不需要使用 JSON 序列化轉換資料的過程，就可以提升溝通效率。
+透過 JSI 可以直接讓 JavaScript 程式碼呼叫原生程式碼的函數，獲取原生對象的引用，然後同步地使用這些引用來訪問原生功能，不需要使用 JSON 序列化轉換資料的過程，就可以提升溝通效率。
 
-例如，想要打開手機的相機，就可以透過 JavaScript 去調用原生拍照的 Api ，打開相機的這項任務就會在原生程式碼中執行。
+例如，想要打開手機的相機，就可以透過 JavaScript 去呼叫原生拍照的 Api ，打開相機的這項任務就會在原生程式碼中執行。
 
 ### Fabric
 
@@ -58,7 +58,7 @@ Fabric 可以直接在 C++ 中創建 Shadow Tree，以減少渲染特定元素�
 3. Turbo Module 直接透過 JSI 與 JavaScript 溝通。
 4. JavaScript 中的 React 元件將會透過 Fabric 去渲染原生 UI 畫面，同時 Fabric 也是使用 JSI 跟原生模組、JavaScript 溝通。
 5. Fabric 會使用 Yoga 引擎去計算使用者介面的佈局。
-6. Fabric 使用 Fabric Renderer 在使用者螢幕上繪製用戶介面元素，並且調用原生圖形 API 去處理手勢、動畫..等功能。
+6. Fabric 使用 Fabric Renderer 在使用者螢幕上繪製用戶介面元素，並且呼叫原生圖形 API 去處理手勢、動畫..等功能。
 
 ## 新架構的改變
 
