@@ -1,0 +1,64 @@
+---
+## sidebar_position: 2
+
+### 建構畫面的最小單位：React Element
+---
+
+## React Element
+
+React Element 就是組成 React Virtual DOM 畫面結構的元素，它是基於 Virtual DOM 的概念描述並且組成畫面的最小單位，其本質是 JavaScript 物件資料型態，用來描述預期中真實的 DOM 元素。
+
+## 建立 React Element 的方法
+
+使用 React 的 createElement 方法來建立 React Element 並且傳入以下參數：
+
+1. type:元素的類型，標籤名稱的字串，例如:`h1`、`div`、`p`、`span`等，也可以傳入 React Element，例如 `Fragment`
+2. props:元素的屬性，必須是物件或`null`
+3. optional:子元素，可以傳入 `React Element`作為子節點 或 `null`、`string`、`number`...等。
+
+```jsx live
+function App() {
+  const h1Element = React.createElement(
+    "h1",
+    { className: "title" },
+    "Hello World",
+  );
+  return <div>{h1Element}</div>;
+}
+```
+
+根據上方例子可以理解為使用 createElement 方法來建立一個元素類型為 `h1` 的元素，並且將 `h1` 元素的屬性傳入className `title`，並且將 `h1` 元素的內容設定為 `Hello World`。這個 React Element 將轉換成相對應的 DOM 元素。
+
+將 h1Element 印出來可以發現，React element 本身為 Javascript 物件。
+
+```js
+console.log(h1Element)
+
+{
+    $$typeof: Symbol(react.element),
+    type: 'h1',
+    key: null,
+    ref: null,
+    props: {
+        className: 'title',
+        children: 'Hello World'
+        },
+     …
+}
+```
+
+接著透過 React 轉換 DOM 元素來呈現在瀏覽器畫面：
+![](./截圖%202024-04-07%20下午4.24.08.png)
+
+## React Element 與實際 DOM 的關係
+
+可以透過定義 React Element 後，透過 React 轉換成相對應的 DOM 元素來呈現在瀏覽器畫面。雖然 React Element 與 DOM 元素是相對應的關係，但是在某些屬性上還是略有不同的，例如：`class` 屬性在 React Element 中是使用 `className`。
+
+## React Element 一旦被建立後不可以被修改的特性
+
+為什麼 React Element 一旦被建立後不可以被修改? 源於 Virtual DOM 的概念，Virtual DOM 是透過比對新的 Virtual DOM 與舊 Virtual DOM 的差異來去更新真實的 DOM 元素的結構，以縮小操作 DOM 的範圍。
+
+而 React Element 是基於 React 中 Virtual DOM 組成虛擬畫面的最小單位，同時也是描述這個時間點歷史畫面紀錄。
+所以當資料更新時，會建立起新的 Virtual DOM 也就是新的 React Element，再透過與前一份 Virtual DOM 的 React Element 去做對比，最後再將差異更新到真實的 DOM 元素上，這是 React 核心的更新機制。
+
+React 為了保持這個機制的運作，所以讓 React Element 被建立後就是不能被修改，因為一旦可以修改 React 就無法去比較新舊的差異，因此在 React 中你也無法手動去修改 React Element。

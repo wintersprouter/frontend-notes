@@ -2250,7 +2250,7 @@
 
 "@docusaurus/theme-live-codeblock@^3.2.1":
   version "3.2.1"
-  resolved "https://registry.npmjs.org/@docusaurus/theme-live-codeblock/-/theme-live-codeblock-3.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/@docusaurus/theme-live-codeblock/-/theme-live-codeblock-3.2.1.tgz#546a7f1b6ccc6b6bb2965e3d91aa6c2c4dd6b674"
   integrity sha512-K1J6bC5rDbF+jfZrjm7byxLUk1R/flgnozU5LflE5FL3+Y/rW72TXshWAghSKWOP6crhLJP1BsoJ9mRf/9KB3Q==
   dependencies:
     "@docusaurus/core" "3.2.1"
