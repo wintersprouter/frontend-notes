@@ -1,0 +1,96 @@
+---
+## sidebar_position: 3
+
+### Render React element
+---
+
+## `react-dom`
+
+`react-dom` 是 react 用來將 React Element 繪製成實際 DOM 的工具。透過 `react-dom` 可以指定目標容器去產生或操作實際的 DOM 元素，在 React 專案中會使用 `root` 作為目標容器的入口，以此將 React Element 繪製成實際 DOM 輸出至 `root` 的容器中，而在這個容器中所輸出的 DOM 元素將會交由 React 管轄。
+
+## 將 React Element 繪製成實際 DOM 的流程
+
+### 1.準備輸出 DOM 元素的目標容器
+
+這個 `<div id="root"></div>` 就是 React 繪製成實際 DOM 的目標容器。在此容器內的元素將會被 React 管轄。
+
+```html
+<body>
+  <div id="root"></div>
+</body>
+```
+
+### 2.建立 Root 並指定目標容器
+
+```js title=index.js
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+//取得目標容器 DOM 節點
+const rootContainer = document.getElementById("root");
+
+//建立React app 畫面管轄入口
+const root = ReactDOM.createRoot(rootContainer);
+```
+
+### 3. 建立 React Element
+
+```js title=index.js
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+//取得目標容器 DOM 節點
+const rootContainer = document.getElementById("root");
+
+//建立React app 畫面管轄入口
+const root = ReactDOM.createRoot(rootContainer);
+
+// highlight-start
+const h1Element = React.createElement(
+  "h1",
+  { className: "title" },
+  "Hello World",
+);
+// highlight-end
+```
+
+### 4.將 React Element 繪製成實際 DOM 元素
+
+```js title=index.js
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+//取得目標容器 DOM 節點
+const rootContainer = document.getElementById("root");
+
+//建立React app 畫面管轄入口
+const root = ReactDOM.createRoot(rootContainer);
+
+const h1Element = React.createElement(
+  "h1",
+  { className: "title" },
+  "Hello World",
+);
+
+// highlight-next-line
+root.render(h1Element);
+```
+
+`react-dom` 透過 `root.render()` 將 React Element 進行繪製成真實的 DOM 元素並且注入 root 容器中，在使用 root 容器進行畫面渲染。
+
+## Virtual DOM 的畫面管理流程
+
+Virtual DOM 將畫面的管理流程拆分成兩個階段：Reconciler 和 Render。
+
+### Reconciler
+
+Reconciler 主要是用來定義與管理畫面的結構。
+
+在瀏覽器的環境，Reconciler 負責建立和定義 React Element，以描述預期的 DOM 結構，另一個重要的功能是當畫面需要更新時，會找出新舊的 React Element 之間的差異，將差異的部分告訴 Render 。
+
+### Render
+
+Render 則是將 Reconciler 所定義好的描述結構轉換成畫面。
+在瀏覽器的環境下的 Render 就是 `react-dom`， React Element 將透過 `react-dom` 所產生的 root 去繪製成實際 DOM 元素，當畫面需要更新時，會將 Reconciler 比對新舊差異的部分同步化到實際的 DOM 更新。
+
+畫面管理拆分成 Reconciler 與 Render 處理的一大好處是，React 可以替換 Render 去產生瀏覽器以外的 UI 換畫面，例如：React Native，就是把 React 透過專用的 Render 來轉換成 Android 或 IOS 的原生的 UI 畫面。
