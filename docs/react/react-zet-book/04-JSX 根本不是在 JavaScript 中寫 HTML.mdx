@@ -77,4 +77,4 @@ const h1Element = _jsx("h1", { className: "title" }, "Hello World");
 root.render(h1Element);
 ```
 
-`_jsx` 方法的意思類似呼叫建立 React element 的 `React.createElement` 方法，這樣的轉譯過程是在 Build time 時完成的，所以在瀏覽器中 Runtime 執行時，不需要再進行轉譯，直接執行即可。
+`_jsx` 方法的意思類似呼叫建立 React element 的 `React.createElement` 方法，透過靜態解析JSX 語法的語意來避免一些多餘的資料處理流程，這樣的轉譯過程是在 Build time 時完成的，所以在瀏覽器中 Runtime 執行時，不需要再進行轉譯，直接執行即可。

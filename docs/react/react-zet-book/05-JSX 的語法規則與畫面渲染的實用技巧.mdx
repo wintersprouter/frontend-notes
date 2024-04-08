@@ -1,0 +1,72 @@
+## JSX 的標籤需閉合
+
+在 HTML 中，有些標籤是不需要閉合的，例如 `<img>`、`<input>`，但在 JSX 中，所有的標籤都需要閉合。
+
+```HTML
+<input type="text">
+<img src="./index.jpg">
+
+```
+
+在 JSX 中，沒有子元素的標籤也需要閉合，例如：使用自我閉合，如下：
+
+```jsx
+<input type="text"/>
+<img src="./index.jpg"/>
+
+```
+
+這樣 JSX transformer 才能夠正確地轉譯。
+
+## 為什麼 JSX 語法的第一層只能有一個節點？
+
+因為 JSX 語法就是呼叫一次 React.createElement() 方法，而這個方法只會回傳一個 React Element ，又樹狀的資料結構只能有一個根節點，所以 JSX 語法的第一層只能有一個節點，所以如果有多個節點，就必須用共同一個父節點包起來。
+
+```jsx
+const element = (
+  //highlight-next-line
+  <div>
+    <h1>Hello, world!</h1>
+    <h2>Welcome to React</h2>
+    //highlight-next-line
+  </div>
+);
+```
+
+如果不想因為第一層用 `<div></div>` 包起來而多一個多餘的 DOM 節點，可以使用 React.Fragment 來包裹或是使用`<></>`這樣就不會產生多餘的 DOM 節點。
+
+1. 使用 `React.Fragment`
+
+```jsx
+import { Fragment } from "react";
+const element = (
+  //highlight-next-line
+  <Fragment>
+    <h1>Hello, world!</h1>
+    <h2>Welcome to React</h2>
+    //highlight-next-line
+  </Fragment>
+);
+```
+
+2. 使用 `<></>`
+
+```jsx
+const element = (
+  //highlight-next-line
+  <>
+    <h1>Hello, world!</h1>
+    <h2>Welcome to React</h2>
+    //highlight-next-line
+  </>
+);
+```
+
+這兩個方法在瀏覽器轉譯成實際的 DOM 時：
+
+```HTML
+<div id="root">
+    <h1>Hello, world!</h1>
+    <h2>Welcome to React</h2>
+</div>
+```
