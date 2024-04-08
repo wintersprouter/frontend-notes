@@ -1,0 +1,80 @@
+## JSX 語法
+
+JSX 語法是一種語法糖，提供我們在建立 react element 時，用類似撰寫 HTML 語法的體驗，提高可閱讀性與開發體驗。
+
+1. 使用 React.createElement 建立 React Element
+
+```jsx live "
+function App() {
+  const h1Element = React.createElement(
+    "h1",
+    { className: "title" },
+    "Hello World",
+  );
+  return <div>{h1Element}</div>;
+}
+```
+
+２. 使用 JSX 語法建立 React Element
+
+```jsx live title="index.jsx"
+function App() {
+  return (
+    <div>
+      <h1 className="title">Hello World</h1>
+    </div>
+  );
+}
+```
+
+JSX 語法透過開發工具轉譯後以上兩者的 react element 結構是一樣的，但是使用 JSX 語法的方式更為簡潔。
+JSX 語法本質就是 **去呼叫 React.createElement** 來建立 React Element 的替代語法，其所回傳的值便是一個 React Element。
+
+但是 JSX 語法 在瀏覽器中的 JavaScript 引擎是無法直接執行的，所以需要透過 **transpiler** 來將 JSX 語法靜態轉譯成瀏覽器 JavaScript 引擎可以執行的 JavaScript 語法。
+
+## 什麼是 transpiler?
+
+transpiler (轉譯器)＝ translator (翻譯器) + compiler (編譯器)，也就是將原始的程式碼轉換成另一種程式碼的工具，例如 Babel 就是一個將 JSX 語法轉譯成瀏覽器可以執行的 JavaScript 語法的轉譯器。
+
+## JSX transformer
+
+JSX transformer 負責轉譯 JSX 語法， Babel 就是 react 官方建議的 transpiler
+
+## JSX 語法是經過什麼樣的處理最後才能在瀏覽器中執行並定義畫面？
+
+```js title="index.jsx"
+import ReactDOM from "react-dom/client";
+
+const rootContainer = document.getElementById("root");
+
+const root = ReactDOM.createRoot(rootContainer);
+
+// highlight-start
+const h1Element = React.createElement(
+  "h1",
+  { className: "title" },
+  "Hello World",
+);
+// highlight-end
+
+root.render(h1Element);
+```
+
+React 17 後，在開發環境 Build time 、Javascript 還沒有被執行時，經過 Babel JSX transformer 搭配 `jsx-runtime` 轉譯後的程式碼:
+
+```js title="output.js"
+import ReactDOM from "react-dom/client";
+// highlight-next-line
+import { jsx as _jsx } from "react/jsx-runtime";
+const rootContainer = document.getElementById("root");
+
+const root = ReactDOM.createRoot(rootContainer);
+
+// highlight-start
+const h1Element = _jsx("h1", { className: "title" }, "Hello World");
+// highlight-end
+
+root.render(h1Element);
+```
+
+`_jsx` 方法的意思類似呼叫建立 React element 的 `React.createElement` 方法，這樣的轉譯過程是在 Build time 時完成的，所以在瀏覽器中 Runtime 執行時，不需要再進行轉譯，直接執行即可。
