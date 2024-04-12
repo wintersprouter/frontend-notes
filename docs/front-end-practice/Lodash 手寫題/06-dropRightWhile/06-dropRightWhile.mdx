@@ -13,11 +13,11 @@ import TabItem from "@theme/TabItem";
 
 `dropRightWhile` 函式會從陣列的末端開始遍歷，移除符合指定條件的元素，直到遇到不符合條件的元素為止。然後，它會回傳剩餘的元素所組成的新陣列，同時確保原始陣列保持不變。
 
-```
+```js
 // 範例一
 dropRightWhile(
   ["hello", "world", "today", "isGood"],
-  (value) => value.length > 5
+  (value) => value.length > 5,
 );
 // => ['hello', 'world', 'today']
 // 範例二
@@ -27,7 +27,7 @@ dropRightWhile(
     { name: "Charlie", age: 20 },
     { name: "Bob", age: 30 },
   ],
-  (obj) => obj.age > 25
+  (obj) => obj.age > 25,
 );
 // => [{ name: 'Alice', age: 25 }, { name: 'Charlie', age: 20 }]
 

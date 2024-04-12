@@ -1,0 +1,89 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+🔸 **題目描述**
+
+實作 `fill` 函式，此函式接收四個參數：
+
+- 一個陣列
+- 要替換的 `value`
+- `start` 索引
+- `end` 索引
+
+該函式會從 `start` 到 `end` 索引 (包含 `start` 但不包含 `end`) 來把陣列的元素換成 `value` 。如果未提供 `start` 索引，則應預設為 0。如果未提供 `end` 索引，則剩餘元素會被替換為 `value`。
+
+```js
+fill([1, 2, 3], "_");
+// => ['_', '_', '_']
+
+fill([1, 2], "*", 2, 3);
+// => [1, 2]
+
+fill([1, 2, 3, 4, 5], "_", 1, -1);
+// => [1, '_', '_', '_', 5]
+```
+
+## Tests
+
+```js
+import { describe, expect, test } from "@jest/globals";
+import fill from "./fill"; // adjust this to your actual file path
+
+describe("fill", () => {
+  test("fills all elements with the provided value when start and end are not provided", () => {
+    expect(fill([1, 2, 3], "_")).toEqual(["_", "_", "_"]);
+  });
+
+  test("does not fill any elements when start is equal to or greater than the array length", () => {
+    expect(fill([1, 2], "*", 2, 3)).toEqual([1, 2]);
+  });
+
+  test("fills elements from start to end with the provided value", () => {
+    expect(fill([1, 2, 3, 4, 5], "_", 1, -1)).toEqual([1, "_", "_", "_", 5]);
+  });
+
+  test("fills remaining elements with the provided value when end is not provided", () => {
+    expect(fill([1, 2, 3], "_", 1)).toEqual([1, "_", "_"]);
+  });
+});
+```
+
+## Solutions
+
+<Tabs>
+  <TabItem value="solution1" label="解法一">
+    ```js title="solution1.js"
+    function fill(array, value, start = 0, end = array.length) {
+        if (start < 0) {
+            start = array.length + start;
+        }
+
+        if (end < 0) {
+            end = array.length + end;
+        }
+
+        if (end > array.length) {
+            end = array.length;
+        }
+
+        for (let i = start; i < end; i++) {
+            array[i] = value;
+        }
+
+        return array;
+    }
+
+export default inRange;
+```
+
+  </TabItem>
+
+  <TabItem value="solution2" label="解法二">
+    ```js title="solution2.js"
+    function fill(array, value, start = 0, end = array.length) {
+        return array.fill(value, start, end);
+    }
+    ```
+
+</TabItem>
+</Tabs>
