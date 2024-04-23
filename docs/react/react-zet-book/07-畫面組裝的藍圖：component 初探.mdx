@@ -1,0 +1,37 @@
+## component
+
+簡單來說就是畫面的藍圖，component 就是由開發者自行定義好的商業邏輯、特定的樣式、React Element 畫面所組成的，就如同蓋房子一樣，如果說應用程式是一棟房子，那麼 component 就是搭建成房子的不同建材：鋼筋、水泥、磚頭...，透過組合這些 component 而逐步組成應用程式的畫面，同時 component 是可以重複使用的，讓程式碼變得更容易維護與管理。
+
+例如：設計一個 TodoList 的應用程式，可以將 TodoList 拆分成由多個 `<TodoItem />` 元件所組成的 `<TodoList/>` 元件，雖然 `<TodoItem />`這個元件是重用的，但每一個 `<TodoItem />` 都有其各自的元件狀態。
+
+```jsx title="TodoItem.jsx"
+const TodoItem = ({ todo }) => {
+  return <li>{todo}</li>;
+};
+```
+
+```jsx title="TodoList.jsx"
+const TodoList = () => {
+  const todos = ["Todo 1", "Todo 2", "Todo 3"];
+  return (
+    <div>
+      <h1>Todo List</h1>
+      <ul>
+        {todos.map((todo, index) => (
+          <TodoItem key={`${todo}-${index}`} todo={todo} />
+        ))}
+      </ul>
+    </div>
+  );
+};
+```
+
+## 抽象化的意義
+
+## props？ 為什麼props是唯獨的？
+
+## component 的 render 與 re-render
+
+## 為什麼 component 命名中的首字母必須為大寫？
+
+## 正確的呼叫 component 的方式
