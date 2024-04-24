@@ -1,137 +1,139 @@
 ---
 ## sidebar_position: 3
 
-### React Native 各版號的差異
+### React Native 各個版本更新摘要（更新至 0.74）
 ---
+
+# React Native 各個版本更新摘要（更新至 0.74）
 
 ## 留意專案目前使用的 React Native 版本
 
 React Native 版本很重要，根據 React Native 的版本號不同，所支援的功能、環境、套件相容性、渲染系統都有所不同，會大大影響後續開發的難易度。所以應去了解手上的版本的內容去設定開發環境的配置。
 我整理了以下各版本的更新摘要：
 
-由新版本至舊版本（0.74 ~ 0.60）
+## 由新版本至舊版本各個版本的更新摘要（0.74 ~ 0.60）
 
-- React Native 0.74（2024年4月）：
+### React Native 0.74（2024年4月）
 
-  - 推出 Yoga 3.0： 全新的 layout 引擎
-    - 支援 `align-content: 'space-evenly'`
-    - 支援 `position: 'static'`: 只有在新架構才支援這個屬性
-  - 新架構：
-    - [預設 Bridgeless 模式](https://github.com/reactwg/react-native-new-architecture/discussions/174)
-    - onLayout callback 支援 batch update :
-      本來在 onLayout callback 中的每更新一個狀態就會直接重新渲染，新版的 onLayout callback 採用 batch update 也就是將所有 onLayout callback 中的狀態都一次更新後再進行渲染提交，如此可以減少渲染的次數。
-  - 新的專案預設使用 Yarn 3
-  - Android 最小 SDK 版本提升至 23 (Android 6.0)
-  - 刪除已經棄用的 `PropTypes`
-  - 刪除已經棄用的 `PushNotificationIOS API`
+- 推出 Yoga 3.0： 全新的 layout 引擎
+  - 支援 `align-content: 'space-evenly'`
+  - 支援 `position: 'static'`: 只有在新架構才支援這個屬性
+- 新架構：
+  - [預設 Bridgeless 模式](https://github.com/reactwg/react-native-new-architecture/discussions/174)
+  - onLayout callback 支援 batch update :
+    本來在 onLayout callback 中的每更新一個狀態就會直接重新渲染，新版的 onLayout callback 採用 batch update 也就是將所有 onLayout callback 中的狀態都一次更新後再進行渲染提交，如此可以減少渲染的次數。
+- 新的專案預設使用 Yarn 3
+- Android 最小 SDK 版本提升至 23 (Android 6.0)
+- 刪除已經棄用的 `PropTypes`
+- 刪除已經棄用的 `PushNotificationIOS API`
 
-- React Native 0.73（2023年12月）：
+### React Native 0.73（2023年12月）
 
-  - 提升 Debugging
-    - 在 Hermes 在後台捕獲所有 `console.log()` 調用
-  - Metro 更穩定的支援 Symlink
-  - 支援 Android 14
-  - Kotlin 現在是官方使用 React Native 構建的 Android 應用程式的推薦語言。
-    - 快速遷移 Java 到 Kotlin：Android Studio `Code > Convert Java file to Kotlin File`
-  - Android Gradle 外掛程式 (AGP) 版本從 7.4.x 更新至 8.1.x。
-  - 建立 Android 應用程式必須使用 Java 17
-  - Android 最小 SDK 版本提升至 21 (Android 5.0)
-  - 新架構：
-    - 新增 Bridgeless 模式
-  - 棄用 Flipper 與 React Native 整合: 棄用 Flipper 作為React Native debug 工具
-  - 棄用 `@types/react-native`
-  - ios 應用程式最低支援版本 13.4
+- 提升 Debugging
+  - 在 Hermes 在後台捕獲所有 `console.log()` 調用
+- Metro 更穩定的支援 Symlink
+- 支援 Android 14
+- Kotlin 現在是官方使用 React Native 構建的 Android 應用程式的推薦語言。
+  - 快速遷移 Java 到 Kotlin：Android Studio `Code > Convert Java file to Kotlin File`
+- Android Gradle 外掛程式 (AGP) 版本從 7.4.x 更新至 8.1.x。
+- 建立 Android 應用程式必須使用 Java 17
+- Android 最小 SDK 版本提升至 21 (Android 5.0)
+- 新架構：
+  - 新增 Bridgeless 模式
+- 棄用 Flipper 與 React Native 整合: 棄用 Flipper 作為React Native debug 工具
+- 棄用 `@types/react-native`
+- ios 應用程式最低支援版本 13.4
 
-- React Native 0.72（2023年6月）：
+### React Native 0.72（2023年6月）
 
-  - Metro 支援 Symlink：主要用來建立 monorepo
-  - 開發者體驗提升：
-    - style 樣式錯誤不再以 Redbox 的形式顯示
-    - Hermes 提供可讀性更好的錯誤訊息
-    - 改進 React Native CLI 的錯誤輸出
-    - Hermes 更快編譯與加速 JSON 解析
-  - 重新命名 react-native/packages：需要修改路徑、升級到 0.72
-  - 移除棄用的元件：Slider、DatePickerIOS、ProgressViewIOS
+- Metro 支援 Symlink：主要用來建立 monorepo
+- 開發者體驗提升：
+  - style 樣式錯誤不再以 Redbox 的形式顯示
+  - Hermes 提供可讀性更好的錯誤訊息
+  - 改進 React Native CLI 的錯誤輸出
+  - Hermes 更快編譯與加速 JSON 解析
+- 重新命名 react-native/packages：需要修改路徑、升級到 0.72
+- 移除棄用的元件：Slider、DatePickerIOS、ProgressViewIOS
 
-- React Native 0.71（2023年1月）：
+### React Native 0.71（2023年1月）
 
-  - 預設使用 TypeScript
-  - 新增 Flexbox gap 屬性
-  - 修復 PropTypes： 0.66 的時候把這個屬性棄用，在這個版本又加回來（？
-  - 新增 React DevTools 網頁 debug 工具
-  - 優化 Hermes 性能：提升 JSON.parse 效能 30%
-  - 優化新架構（New Architecture）：減少 build 的時間、Android 刪除大量 C++ 程式碼
-  - 刪除 AsyncStorage and MaskedViewIOS
+- 預設使用 TypeScript
+- 新增 Flexbox gap 屬性
+- 修復 PropTypes： 0.66 的時候把這個屬性棄用，在這個版本又加回來（？
+- 新增 React DevTools 網頁 debug 工具
+- 優化 Hermes 性能：提升 JSON.parse 效能 30%
+- 優化新架構（New Architecture）：減少 build 的時間、Android 刪除大量 C++ 程式碼
+- 刪除 AsyncStorage and MaskedViewIOS
 
-- React Native 0.70（2022年9月）：
+### React Native 0.70（2022年9月）
 
-  - 預設使用 Hermes 引擎
-  - Codegen 配置修改
-  - React Native CLI 更新至 9.0
-  - 更新 Android Gradle Plugin 至 7.2.1
-  - 更新 Android Gradle version 至 7.5.1
-  - 更新 Metro 至 0.72
+- 預設使用 Hermes 引擎
+- Codegen 配置修改
+- React Native CLI 更新至 9.0
+- 更新 Android Gradle Plugin 至 7.2.1
+- 更新 Android Gradle version 至 7.5.1
+- 更新 Metro 至 0.72
 
-- React Native 0.69（2022年6月）：
+### React Native 0.69（2022年6月）
 
-  - 預設使用 React 18
-  - 内建 Hermes
-  - 更新 Android Gradle Plugin 至 7.1.1
-  - React Native CLI 更新至 8.0
-  - Ruby 更新至 2.7.5
+- 預設使用 React 18
+- 内建 Hermes
+- 更新 Android Gradle Plugin 至 7.1.1
+- React Native CLI 更新至 8.0
+- Ruby 更新至 2.7.5
 
-- React Native 0.68（2022年3月）：
+### React Native 0.68（2022年3月）
 
-  - 更新至 Node 16 LTS ，最低支援到 Node 14
-  - 更新 Android Gradle Plugin 至 7.0.1
-  - 更新 Metro 至 0.67
-  - 更新 Kotlin 至 1.6.10
-  - 更新 Android Gradle version 至 7.3
-  - 更新 Android compile and target SDK 至 31
-  - 使用新架構（New Architecture）：此版開始使用 Fabric 渲染器和TurboModule 系統。有關新架構做了什麼改變可以看這篇 [DAY 21 解析 React Native 新架構（New Architecture） 原理](https://ithelp.ithome.com.tw/articles/10326854)。
-  - 強制使用 JSDK 11
+- 更新至 Node 16 LTS ，最低支援到 Node 14
+- 更新 Android Gradle Plugin 至 7.0.1
+- 更新 Metro 至 0.67
+- 更新 Kotlin 至 1.6.10
+- 更新 Android Gradle version 至 7.3
+- 更新 Android compile and target SDK 至 31
+- 使用新架構（New Architecture）：此版開始使用 Fabric 渲染器和TurboModule 系統。有關新架構做了什麼改變可以看這篇 [DAY 21 解析 React Native 新架構（New Architecture） 原理](https://ithelp.ithome.com.tw/articles/10326854)。
+- 強制使用 JSDK 11
 
-- React Native 0.67（2022年1月）：
+### React Native 0.67（2022年1月）
 
-  - 更新 Android Gradle version 至 7.2
-  - 更新 Android Kotlin version 至 1.5.31
-  - 棄用 DatePickerAndroid
+- 更新 Android Gradle version 至 7.2
+- 更新 Android Kotlin version 至 1.5.31
+- 棄用 DatePickerAndroid
 
-- React Native 0.66（2021年10月）：
+### React Native 0.66（2021年10月）
 
-  - 支援 Android 12 、 iOS 15
-  - 支援 Android 12 新的藍牙權限
-  - 提供 Apple Silicon (M1) Mac、 Xcode 13、 iOS 15 更好的支援
-  - Hermes 0.9.0
-  - 棄用 PropTypes
+- 支援 Android 12 、 iOS 15
+- 支援 Android 12 新的藍牙權限
+- 提供 Apple Silicon (M1) Mac、 Xcode 13、 iOS 15 更好的支援
+- Hermes 0.9.0
+- 棄用 PropTypes
 
-- React Native 0.65（2021年8月）：
+### React Native 0.65（2021年8月）
 
-  - Hermes 0.8 支援：Hermes iOS 此版開始支援 Apple M1 晶片
-  - 修正與更新無障礙功能(Accessibility)
-  - JCenter 停用：不再使用 JCenter 來分發原生模組。
-  - 支援 Android Gradle Plugin 7
+- Hermes 0.8 支援：Hermes iOS 此版開始支援 Apple M1 晶片
+- 修正與更新無障礙功能(Accessibility)
+- JCenter 停用：不再使用 JCenter 來分發原生模組。
+- 支援 Android Gradle Plugin 7
 
-- React Native 0.64（2021年3月）：
+### React Native 0.64（2021年3月）
 
-  - ios 支援 [Hermes](https://hermesengine.dev/)：藉由降低內存利用率、減少下載大小等方法，使用 Hermes Javascript 引擎可提升 React Native 效能。
-  - Metro 配置選項 Inline Requires：縮短啟用時間
-  - Hermes 支援 Proxy
-  - React 17
-  - 棄用 Android API levels 16-20.
-  - 最低版本 Xcode 12、 CocoaPods 1.10
-  - Node.js 版本支援Node 10 - Node 12
+- ios 支援 [Hermes](https://hermesengine.dev/)：藉由降低內存利用率、減少下載大小等方法，使用 Hermes Javascript 引擎可提升 React Native 效能。
+- Metro 配置選項 Inline Requires：縮短啟用時間
+- Hermes 支援 Proxy
+- React 17
+- 棄用 Android API levels 16-20.
+- 最低版本 Xcode 12、 CocoaPods 1.10
+- Node.js 版本支援Node 10 - Node 12
 
-- React Native 0.63（2020年7月）：
+### React Native 0.63（2020年7月）
 
-  - LogBox 功能：改進了錯誤和警告的顯示方式，提高了可讀性。
-  - Pressable 元件
-  - 停止支援 iOS 9 和 Node.js 8
+- LogBox 功能：改進了錯誤和警告的顯示方式，提高了可讀性。
+- Pressable 元件
+- 停止支援 iOS 9 和 Node.js 8
 
-- React Native 0.62（2020年3月）：
+### React Native 0.62（2020年3月）
 
-  - 將 Flipper 設為預設 debugg 的開發者工具
-  - 新增 dark mode 功能： Appearance module、useColorScheme hook
+- 將 Flipper 設為預設 debugg 的開發者工具
+- 新增 dark mode 功能： Appearance module、useColorScheme hook
 
 - React Native 0.61（2019年9月）：
 

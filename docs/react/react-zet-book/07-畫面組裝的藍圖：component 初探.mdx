@@ -26,9 +26,59 @@ const TodoList = () => {
 };
 ```
 
-## 抽象化的意義
+## props？ 為什麼 props 是唯讀的？
 
-## props？ 為什麼props是唯獨的？
+props 指的就是呼叫 component 時會傳入 component 的屬性，而 props 的資料型別在 React 中沒有任何限制。
+
+```jsx title="TodoItem.jsx"
+// highlight-next-line
+const TodoItem = ({ title, isDone }) => {
+  //將接收到的 props 使用解構取出屬性資料，這樣也就可以賦值到區域變數中
+  return(
+    <li>
+      <input type='checkbox' id={title} name={title} checked={isDone} />
+      <label htmlFor={title}>{title}</label>
+    </li>;
+  )
+};
+```
+
+```jsx title="TodoList.jsx"
+const TodoList = () => {
+  const todos = [
+    {
+      title: "Todo 1",
+      isDone: false,
+    },
+    {
+      title: "Todo 2",
+      isDone: true,
+    },
+    {
+      title: "Todo 3",
+      isDone: false,
+    },
+  ];
+  return (
+    <div>
+      <h1>Todo List</h1>
+      <ul>
+        {todos.map((todo, index) => (
+          <TodoItem
+            key={`${todo}-${index}`}
+            // highlight-start
+            title={todo.title} //將 title 屬性傳入 <TodoItem/>
+            isDone={todo.isDone} //將 isDone 屬性傳入 <TodoItem/>
+            // highlight-end
+          />
+        ))}
+      </ul>
+    </div>
+  );
+};
+```
+
+props 的特性是唯讀的，這是因為 React 的核心概念是單向資料流，所以當資料以 props 屬性傳遞到 components 內部時，為了確保資料的源頭與可追蹤性，以維持單向資料流的特性，所以 props 是不可以被修改的，因為當 props 被手動修改時，我們就無法確定資料的來源是從哪裡來的，也可能會出現無法預期的錯誤。
 
 ## component 的 render 與 re-render
 
