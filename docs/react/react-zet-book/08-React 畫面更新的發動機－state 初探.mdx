@@ -9,3 +9,23 @@ state 是一種臨時的且可以用來更新記憶應用程式的狀態。在 R
 component 可以說是 state 的容器，每一個 component 都有自己的 state，而 state 必須依附在 component 上去記憶原始資料的狀態，當 component 中的 state 資料更新的時候就會重新渲染畫面，該 component 與其中的子孫 component 也會跟著重繪、re-render，因此 component 也有限縮畫面重繪的範圍的功能。
 
 在 function component 中，state 使用 `useState` 這個 hook 來定義與存取 state 資料。
+
+## 為什麼 `useState` 的回傳值是一個陣列？
+
+```jsx
+const [state, setState] = useState(initialState);
+```
+
+`useState` hook 會接受一個初始值 `initialState` 作為 state 的原始資料，並且會回傳一組陣列，在陣列中第一個元素 `state` 指的是此次 render 當前的值，第二個元素 `setState` 是一個函式，用來更新 `state` 的值。
+
+使用陣列解構可以讓開發者更容易取得與便於讓開發者根據商業邏輯自行命名 state 與 setState 函式並且賦值，如此一來，當 component 中有多個 state 時，開發者可以更容易區分與管理，避免命名衝突。
+
+## React 是如何辨識並區分同一個 component 中的多個 state？
+
+在同一個 component 中，有可能同時進行呼叫多次 `useState` hook 來定義多個 state，React 透過固定的呼叫順序來區分，因此在 hook 就會有嚴格的呼叫限制：hook 只能在 function component 的最上層呼叫，不能在條件式、迴圈、巢狀 function component 中呼叫。
+
+React 內建的機制會存在一個有序的表去根據這些 hook 的呼叫順序去紀錄 hook 的狀態，因此當 component 執行一次 render 時就會依據順序去取得對應的 state 資料。
+
+## 同一個 component 在多個地方被呼叫，它們之間的 state 資料會互通嗎？為什麼？
+
+即使是同一個 component，當其在不同地方被呼叫到就會產一個新的 component 實例，雖然長相類似但其實是不同的個體，在 component 中 state 資料也會是獨立的，因此不會互通。
