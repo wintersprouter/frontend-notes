@@ -1,0 +1,11 @@
+## React state 的本質？ state 在 React 的畫面管理機制中扮演的角色是什麼？
+
+state 是一種臨時的且可以用來更新記憶應用程式的狀態。在 React 的畫面管理機制中，React 藉由發現 state 的資料更新，去驅動畫面跟著 state 的變動完成相對應的更新。
+
+在 React 單向資料流的機制中，原始資料的 state 是驅動初始畫面渲染完成的成因，可以更新的原始資料 state 就是作為 React 更新畫面的變因，是執行單向資料流的手段，使資料的變動與畫面更新是可靠且更容易預測的。
+
+## state 跟 component 的關係是什麼？
+
+component 可以說是 state 的容器，每一個 component 都有自己的 state，而 state 必須依附在 component 上去記憶原始資料的狀態，當 component 中的 state 資料更新的時候就會重新渲染畫面，該 component 與其中的子孫 component 也會跟著重繪、re-render，因此 component 也有限縮畫面重繪的範圍的功能。
+
+在 function component 中，state 使用 `useState` 這個 hook 來定義與存取 state 資料。
