@@ -1,0 +1,52 @@
+在 component 畫面管理機制中， component 的渲染機制可以分成兩個階段，分別是 render phase 和 commit phase。
+
+## Render phase
+
+在 Render 階段，component 會進行渲染，並且產生 react element。
+
+## Commit phase
+
+在 Commit 階段，component 會把產生的 react element 畫面結構提交並處理到實際的瀏覽器 DOM 上面。
+
+### 第一次 render component
+
+#### Render phase
+
+1. 執行 component function 產生以 props 和 state 描述 component 畫面的 react element。
+2. 接著將生成的 react element 交到 Commit phase 處理。
+
+#### Commit phase
+
+1. mount:
+   這時由於是第一次 render，因此瀏覽器中並沒有 component 相對應的 DOM element，因此會將 react element 全部轉成相對應的實際 DOM element。
+2. mounted:
+   使用瀏覽器的 DOM API `appendChild()` 將生成的 DOM element 掛載到實際的瀏覽器。
+
+### re-render component
+
+#### Render phase
+
+1. 執行 component function 以新版本的 props 和 state 產生描述 component 畫面的 react element。
+2. 將新版本所產生的 react element 與上一次 render 的舊版 react element 進行樹狀結構的比較，找出差異。
+3. 將差異的部分交到 Commit phase 處理。
+
+#### Commit phase
+
+1. 只操作新舊 react element 差異所對應的 DOM element。
+
+## React reconciliation
+
+1. 呼叫 `setState` 更新資料
+
+2. React 會執行 [Object.is()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is)，檢查 state 新舊資料是否有變化。
+   - 如果沒有變化，代表資料沒有更新也就不需要更新畫面，接下來的流程就會中斷。
+   - 如果有變化，就是資料有更新，接著就會進行 re-render。
+
+### Render phase
+
+3. re-render 會執行 component function 並以新版本的 props 和 state 產生新的 react element。
+4. 接著，react 會將前一份產生的舊版 react element 與新版 react element 使用 diffing 演算法來找出樹狀結構差異之處。
+
+### Commit phase
+
+5. 比較完成後，根據差異的的部分所對應的 DOM element 進行操作，最後更新到瀏覽器 DOM 上。
