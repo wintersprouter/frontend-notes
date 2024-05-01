@@ -1,0 +1,15 @@
+## 為什麼 React 並沒有也不需要子 component 向上溝通父 component 的專門機制？
+
+React 的核心概念就是單向資料流，資料只能由上而下傳遞，不需要有子 component 向上溝通父 component 的專門機制的原因在於：
+
+1. `setState` 的函式可以透過 props 傳遞至子 component 。
+
+2. 呼叫 `setState` 函式更新 state 資料和觸發 re-render component 是固定的，因為在子 component 呼叫由父 component 傳下來的 `setState` 就會去更新父 component 的 state，當 state 更新就會 re-render 父 component。
+
+3. 父 component 的 state 資料更新時，React 就會根據新版本的 props 去 re-render 子 component。
+
+基於以上三個 React 的特性就足以達成這個目的，因此 React 並沒有也不需要子 component 向上溝通父 component 的專門機制。
+
+## 如何在子 component 裡觸發更新父 component 資料？
+
+利用 props 將父 component 的 `setState` 方法傳遞給子 component，子 component 接收到`setState` 方法便可以在需要的時候去呼叫這個方法，進而更新父 component 的資料，當父 component 的資料更新時，React 就會 re-render 子 component。

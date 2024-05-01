@@ -50,3 +50,7 @@
 ### Commit phase
 
 5. 比較完成後，根據差異的的部分所對應的 DOM element 進行操作，最後更新到瀏覽器 DOM 上。
+
+## `Object.is()` 拿掉會影響 reconciliation 嗎？
+
+並不會，`Object.is()`就只是個讓效能優化、減少 re-render 的檢查機制，沒有使用 `Object.is()` 檢查 state 就是直接讓 component 直接進行 re-render。
