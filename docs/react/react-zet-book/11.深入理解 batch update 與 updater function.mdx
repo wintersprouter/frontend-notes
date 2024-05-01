@@ -1,0 +1,74 @@
+import CodeSandbox from "../../../src/components/mdx/CodeSandbox.jsx";
+
+## batch update
+
+`setState` 的資料更新後會觸發 component re-render，react 會在將所有執行的事件完成後，才會進行 re-render。
+
+<CodeSandbox codeSandboxId="batch-update-sglxr9?layout=%257B%2522sidebarPanel%2522%253A%2522EXPLORER%2522%252C%2522rootPanelGroup%2522%253A%257B%2522direction%2522%253A%2522horizontal%2522%252C%2522contentType%2522%253A%2522UNKNOWN%2522%252C%2522type%2522%253A%2522PANEL_GROUP%2522%252C%2522id%2522%253A%2522ROOT_LAYOUT%2522%252C%2522panels%2522%253A%255B%257B%2522type%2522%253A%2522PANEL_GROUP%2522%252C%2522contentType%2522%253A%2522UNKNOWN%2522%252C%2522direction%2522%253A%2522vertical%2522%252C%2522id%2522%253A%2522clvnk1xmq00063b6jb3oifd5y%2522%252C%2522sizes%2522%253A%255B100%252C0%255D%252C%2522panels%2522%253A%255B%257B%2522type%2522%253A%2522PANEL_GROUP%2522%252C%2522contentType%2522%253A%2522EDITOR%2522%252C%2522direction%2522%253A%2522horizontal%2522%252C%2522id%2522%253A%2522EDITOR%2522%252C%2522panels%2522%253A%255B%257B%2522type%2522%253A%2522PANEL%2522%252C%2522contentType%2522%253A%2522EDITOR%2522%252C%2522id%2522%253A%2522clvnk1xmq00023b6juqyzn2kd%2522%257D%255D%257D%252C%257B%2522type%2522%253A%2522PANEL_GROUP%2522%252C%2522contentType%2522%253A%2522SHELLS%2522%252C%2522direction%2522%253A%2522horizontal%2522%252C%2522id%2522%253A%2522SHELLS%2522%252C%2522panels%2522%253A%255B%257B%2522type%2522%253A%2522PANEL%2522%252C%2522contentType%2522%253A%2522SHELLS%2522%252C%2522id%2522%253A%2522clvnk1xmq00033b6jwvh3ib50%2522%257D%255D%252C%2522sizes%2522%253A%255B100%255D%257D%255D%257D%252C%257B%2522type%2522%253A%2522PANEL_GROUP%2522%252C%2522contentType%2522%253A%2522DEVTOOLS%2522%252C%2522direction%2522%253A%2522vertical%2522%252C%2522id%2522%253A%2522DEVTOOLS%2522%252C%2522panels%2522%253A%255B%257B%2522type%2522%253A%2522PANEL%2522%252C%2522contentType%2522%253A%2522DEVTOOLS%2522%252C%2522id%2522%253A%2522clvnk1xmq00053b6jx8mem72v%2522%257D%255D%252C%2522sizes%2522%253A%255B100%255D%257D%255D%252C%2522sizes%2522%253A%255B50%252C50%255D%257D%252C%2522tabbedPanels%2522%253A%257B%2522clvnk1xmq00023b6juqyzn2kd%2522%253A%257B%2522tabs%2522%253A%255B%257B%2522id%2522%253A%2522clvnk1xmq00013b6jjcsksb5f%2522%252C%2522mode%2522%253A%2522permanent%2522%252C%2522type%2522%253A%2522FILE%2522%252C%2522filepath%2522%253A%2522%252Fsrc%252Findex.js%2522%257D%255D%252C%2522id%2522%253A%2522clvnk1xmq00023b6juqyzn2kd%2522%252C%2522activeTabId%2522%253A%2522clvnk1xmq00013b6jjcsksb5f%2522%257D%252C%2522clvnk1xmq00053b6jx8mem72v%2522%253A%257B%2522tabs%2522%253A%255B%257B%2522id%2522%253A%2522clvnk1xmq00043b6jxhtib4qx%2522%252C%2522mode%2522%253A%2522permanent%2522%252C%2522type%2522%253A%2522UNASSIGNED_PORT%2522%252C%2522port%2522%253A0%252C%2522path%2522%253A%2522%252F%2522%257D%255D%252C%2522id%2522%253A%2522clvnk1xmq00053b6jx8mem72v%2522%252C%2522activeTabId%2522%253A%2522clvnk1xmq00043b6jxhtib4qx%2522%257D%252C%2522clvnk1xmq00033b6jwvh3ib50%2522%253A%257B%2522tabs%2522%253A%255B%255D%252C%2522id%2522%253A%2522clvnk1xmq00033b6jwvh3ib50%2522%257D%257D%252C%2522showDevtools%2522%253Atrue%252C%2522showShells%2522%253Afalse%252C%2522showSidebar%2522%253Atrue%252C%2522sidebarPanelSize%2522%253A15%257D" />
+
+在上面的例子中：
+
+1. react 執行 App compoent function 後會產生描述畫面的 React element ，並將這個 React element 產生相對應的 DOM element 渲染到瀏覽器上。
+
+2. 在 App component 中初始的 count state 是 0 ,clickCount state 是 0
+
+3. 當點擊 button 後會去執行 `handleClick` function
+
+4. - 當執行到 `setCount(1)`時，react 會將這個更新的動作依照順序放到一個代執行計算佇列 (queue)中
+
+   - 此時的佇列依序由舊至新有：`setCount(1)`
+   - 此時 count 的值為 0
+   - 此時 clickCount 的值為 0
+
+5. - 當執行到 `setCount(3)`時，react 會將這個更新的動作放到佇列 (queue)中
+
+   - 此時的佇列由舊至新依序有：`setCount(1)`、`setCount(3)`
+   - 此時 count 的值為 0
+   - 此時 clickCount 的值為 0
+
+6. - 當執行到 `setCount(5)`時，react 會將這個更新的動作放到佇列 (queue)中
+
+   - 此時的佇列由舊至新依序有：`setCount(1)`、`setCount(3)`、`setCount(5)`
+   - 此時 count 的值為 0
+   - 此時 clickCount 的值為 0
+
+7. - 當執行到 `setClickCount((clickCount) => clickCount + 1)`時，react 會將這個更新的動作放到佇列 (queue)中
+
+   - 此時的佇列由舊至新依序有：`setCount(1)`、`setCount(3)`、`setCount(5)`、setClickCount((clickCount) => clickCount + 1)
+   - 此時 count 的值為 0
+   - 此時 clickCount 的值為 0
+
+8. - 執行完所有的事件後，react 會依照最新佇列的順序自動合併相同的 `setState` 方法，並且只執行最後一次的 `setState` 方法，
+
+   - 此時 count 的值為 5，
+   - 此時 clickCount 的值為 1
+
+9. 更新 state 後才會進行一次 re-render。
+
+batch update 的機制就是 React 會自動將所有的 `setState` 方法依序合併成一次更新，藉此可以省去每更新一次 state 就進行一次 re-render 的效能問題，也可以避免半成品的資料進行 render。
+
+## `flushSync` api
+
+大多數的情況下 react 都會自動幫我們處理好 `setState` 合併更新資料，但如果想要針對某些狀態需要當下就觀察到 DOM element 就可以使用 `flushSync` 方法，`flushSync` 可以指定某些 `setState` 方法不要 batch update，而是立刻 re-render。
+
+但是使用 `flushSync` 需要注意的是 `flushSync` blocking 的，如果 DOM 處理太久會阻擋後續的畫面更新繼續進行，可能會造成畫面卡頓。
+
+## updater function
+
+updater function 可以作為參數傳入 `setState` 方法。
+
+    ```jsx
+    const [count, setCount] = useState(0);
+    const handleClick = () => {
+        //highlight-next-line
+      setCount((prevCount) => prevCount + 1);
+       //(prevCount) => prevCount + 1 就是 updater function
+    };
+    ```
+
+在這個例子中，updater function 會讓 `setCount` 根據到目前為止的 `count` 值 prevCount 去計算產生新的 `count` 值。
+
+### 需要使用 updater function 的情境
+
+- 需要拿到當下 state 持續做計算
+- 可以在子元件中直接去拿到 state 的值
