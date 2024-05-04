@@ -1,0 +1,57 @@
+## JavaScript 的資料型別
+
+### 原始型別 primitive
+
+- number
+- string
+- boolean
+- null
+- undefined
+- symbol
+- bigint
+
+### 物件型別 object
+
+除了原始型別外，其他的都是物件型別，包含：物件和陣列
+
+### 原始型別與物件型別的差異
+
+|          | 原始型別       | 物件型別                 |
+| -------- | -------------- | ------------------------ |
+| 賦值     | 將值賦予至變數 | 將記憶體的位址賦予至變數 |
+| 增加屬性 | 不可以         | 可以                     |
+
+## mutable 與 immutable
+
+### immutable 不可變的
+
+指的就是資料被建立後就不可以被事後修改。
+
+原始型別的特性是 immutable，當值建立之後也會在記憶體中產生相對應的內容，而這個內容是不可以被修改的，所以當變數被重新賦值的時候，只能產生一個新的值取代舊的值，同時，變數會重新指向新的值。
+
+原始型別的值被賦予給其他變數時，是將值複製一份給新的變數，所以當新的變數被修改時，不會影響到原本的變數。
+
+### mutable 可變的
+
+物件型別在建立時會在記憶體中產生一個位址，變數就會指向這個位址 reference。
+
+物件本身的屬性內容是可以被修改的 mutable，對物件的屬性或是內容做修改的動作就是 mutate ，因為物件型別的資料是傳遞記憶體位址，所以當物件的內容被修改時，這個變數的 reference 並不會被修改，但是當物件型別被賦予給其他變數時，由於是將記憶體的位址複製一份給新的變數，所以當新的變數被修改時，會影響到原本的變數。
+
+## 必須在 React 中保持 state 資料的 immutable 的原因
+
+react element 是某一次 render 畫面結構的歷史紀錄，是不可以被修改的，否則 React 資料流的可靠性就會被破壞，其核心機制也可能因此無法正常運作，基於這個原因，state 資料也是 component 某一次 render 的狀態資料，必須是 immutable 的。
+
+在 React 中，當呼叫 `setState` 方法更新 state 資料時，會透過 `Object.is()`，檢查物件或陣列的 reference 是否相同，完全不會去檢查新舊物件或陣列的資料內容是否相同，因此當 state 資料被 mutate 時，就會造成 React 無法正確判斷 state 資料是否有變化，
+
+在 state 被非同步的事件讀取時，也會需要保持 state 資料的 immutable，因為有可能需要根據過去render 的 state 歷史紀錄來做商業邏輯的判斷。
+
+必須保持 state 資料的 immutable 的另外一個原因是則是 react 效能優化機制仰賴檢查資料的 reference 是否相同作為判斷：
+
+- `useEffect`
+- `useMemo`
+- `useCallback`
+- `React.memo`
+
+如果直接 mutate 物件或陣列的 state 資料，就會造成這些 React 效能機制因即使 state 的內容改變了但 state 的 reference 沒有改變而做出錯誤的判斷，導致機制異常，進而影響 React 效能優化的效果。
+
+因此在 React 中如果我們要更新陣列或物件的 state 資料，必須確保新的 state 陣列或物件的 reference 是不同的，而不是手動直接修改原始資料， reference 與前一次不同才能讓 React 正確判斷 state 資料是否有變化，進而正確的更新畫面。
