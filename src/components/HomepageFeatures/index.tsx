@@ -8,6 +8,7 @@ export default function HomepageFeatures(): JSX.Element {
         <span className="container">
           <p className="leading-tight">Front End Engineer</p>
           <p className="leading-tight"> React | React Native</p>
+          <a href="mailto:ashleyhsueh33@gmail.com">ashleyhsueh33@gmail.com</a>
         </span>
       </div>
     </section>
