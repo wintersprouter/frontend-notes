@@ -20,8 +20,8 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.2.1",
-    "@docusaurus/preset-classic": "^3.2.1",
+    "@docusaurus/core": "^3.3.2",
+    "@docusaurus/preset-classic": "^3.3.2",
     "@docusaurus/theme-live-codeblock": "^3.2.1",
     "@mdx-js/react": "^3.0.1",
     "clsx": "^2.1.0",
