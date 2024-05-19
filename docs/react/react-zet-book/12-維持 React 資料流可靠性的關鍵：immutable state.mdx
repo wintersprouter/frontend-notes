@@ -54,4 +54,4 @@ react element 是某一次 render 畫面結構的歷史紀錄，是不可以被�
 
 如果直接 mutate 物件或陣列的 state 資料，就會造成這些 React 效能機制因即使 state 的內容改變了但 state 的 reference 沒有改變而做出錯誤的判斷，導致機制異常，進而影響 React 效能優化的效果。
 
-因此在 React 中如果我們要更新陣列或物件的 state 資料，必須確保新的 state 陣列或物件的 reference 是不同的，而不是手動直接修改原始資料， reference 與前一次不同才能讓 React 正確判斷 state 資料是否有變化，進而正確的更新畫面。
+因此在 React 中如果我們要更新陣列或物件的 state 資料，必須確保新的 state 陣列或物件的 reference 是不同的，應該要產生一個符合資料內容的全新物件或陣列，而不是手動直接修改原始資料， reference 與前一次不同才能讓 React 正確判斷 state 資料是否有變化，進而正確的更新畫面。
