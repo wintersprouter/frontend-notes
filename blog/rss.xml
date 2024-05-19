@@ -4,10 +4,71 @@
         <title>Front End 筆記 Blog</title>
         <link>https://wintersprouter.github.io/frontend-notes/blog</link>
         <description>Front End 筆記 Blog</description>
-        <lastBuildDate>Sun, 07 Jan 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 19 May 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-TW</language>
+        <item>
+            <title><![CDATA[從 2024 React Conf 看 React Native 發展]]></title>
+            <link>https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf</link>
+            <guid>https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf</guid>
+            <pubDate>Sun, 19 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[今年的 React Conf 除了眾所矚目的 React 19 ，同時以 meta 開發團隊開發的 React Native 也帶來了不少亮點。有關於 React Native 的討論都集中在第二天的議程。]]></description>
+            <content:encoded><![CDATA[<p>今年的 React Conf 除了眾所矚目的 React 19 ，同時以 meta 開發團隊開發的 React Native 也帶來了不少亮點。有關於 React Native 的討論都集中在<a href="https://www.youtube.com/watch?v=0ckOUBiuxVY" target="_blank" rel="noopener noreferrer">第二天的議程</a>。</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="new-architecture-上-beta-了">New Architecture 上 beta 了<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#new-architecture-%E4%B8%8A-beta-%E4%BA%86" class="hash-link" aria-label="New Architecture 上 beta 了的直接連結" title="New Architecture 上 beta 了的直接連結">​</a></h3>
+<p>截至 2024 年 3 月 React Native 的在 npm 上的每週下載數突破了220萬，越來越多的開發者使用;同時 React Native 開發團隊也宣布 New Architecture 終於上 beta 了，從 0.68 版本 2022 年 3 月在 React Native 加入了 New Architecture 到現在升級到 0.74 版本後使用 react-native-cli 可以分別在 Android 的 <code>gradle.properties</code> 啟用、iOS 則是在 iOS 的位置執行 <code>bundle install &amp;&amp; RCT_NEW_ARCH_ENABLED=1 bundle exec pod install</code>、使用 Expo 則可以 Expo 51 的設定檔案分別開啟 iOS 跟 Android 是否支援 New Architecture。官方是建議大家可以先玩看看新架構，然後如果有遇到問題的話幫忙回報一下 issue。</p>
+<p>至於為什麼要改整個大改呢？這就要回歸到現在 React Native 的架構，目前的 Javascript 用 bridge 的方式和原生構通，透過 JSON 反序列化和序列化經由 bridge 來傳遞訊息，但使用 bridge 來溝通一次只能有一端通過，而且每傳遞一次就要用 JSON 反序列化和序列化來轉換資料，是相當耗費的效能的。</p>
+<p>那麼 New Architecture 是如何改善這個問題呢？主要使用 JavaScript Interface（簡稱 JSI ）讓 JavaScript 與原生進行溝通，JSI 是用 C++ 寫的，他使用 memory sharing 的方式讓 JavaScript 層與 native 層溝通，也可以讓 JavaScript 同步運行在 native 層，直接讓 JavaScript 程式碼呼叫原生程式碼的函數，更有效率地去直接溝通原生層。</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="官方建議使用-react-native-framework---expo">官方建議使用 React native framework - Expo<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#%E5%AE%98%E6%96%B9%E5%BB%BA%E8%AD%B0%E4%BD%BF%E7%94%A8-react-native-framework---expo" class="hash-link" aria-label="官方建議使用 React native framework - Expo的直接連結" title="官方建議使用 React native framework - Expo的直接連結">​</a></h3>
+<p>這次官方也宣布他們改了 <a href="https://reactnative.dev/docs/environment-setup" target="_blank" rel="noopener noreferrer">React native 的官網</a>，從 0.75 開始版本開始，直接建議開發者使用 Framework 來開發，例如：Expo，先針對先前對於 Expo 的原生支援度不足等原因而採用 react-native-cli 作為開發選項的痛點，Expo 這次更新了一些功能以提升開發者體驗：</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="原生的支援">原生的支援<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#%E5%8E%9F%E7%94%9F%E7%9A%84%E6%94%AF%E6%8F%B4" class="hash-link" aria-label="原生的支援的直接連結" title="原生的支援的直接連結">​</a></h4>
+<p>對於原生的支援 Expo 提供了</p>
+<ul>
+<li>
+<p>Expo sdk : 提供了一些原生的 api，例如：camera、location、notification...等
+<img decoding="async" loading="lazy" alt="Expo sdk " src="https://wintersprouter.github.io/frontend-notes/assets/images/expo-sdk-e3cb8c19f2efe7c715396a8024ccadb2.png" width="1183" height="670" class="img_ev3q"></p>
+</li>
+<li>
+<p>Expo module api : 使用 Expo module api 可以寫自己原生 kotlin、swift 的 module 引入 React-Native 專案</p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="Expo module api" src="https://wintersprouter.github.io/frontend-notes/assets/images/expo-module-api-fb9093b0cb12cc0757e08d743cfa8635.png" width="1164" height="651" class="img_ev3q"></p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expo-router">expo router<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#expo-router" class="hash-link" aria-label="expo router的直接連結" title="expo router的直接連結">​</a></h4>
+<p>採取 file system-based routing 的設計，分別針對 iOS 跟 Android、web 、 tv OS 給出不同的 UX 設計。</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="管理原生程式碼">管理原生程式碼<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#%E7%AE%A1%E7%90%86%E5%8E%9F%E7%94%9F%E7%A8%8B%E5%BC%8F%E7%A2%BC" class="hash-link" aria-label="管理原生程式碼的直接連結" title="管理原生程式碼的直接連結">​</a></h4>
+<p>使用 continuous native generation 管理原生程式碼
+<img decoding="async" loading="lazy" alt="cng" src="https://wintersprouter.github.io/frontend-notes/assets/images/cng-72d8cf3d38f7c922634383f399a15cbf.png" width="1800" height="1028" class="img_ev3q"></p>
+<p>整體看下來，如果 Expo 這些功能可以解決原生支援度不足、可以整合自己寫原生的引入專案、再加上整合 build 跟 deploy 的平台，整體的開發者體驗相較使用 react-native-cli 來的好很多，如果有用過 Xcode build ipa 檔案或 android command line build apk 檔案、aab 檔案就可以心領神會其中的痛苦～但是我覺得這背後有一個隱憂就是 Expo 是一間私人的公司，會不會當使用者累積到一個量後，使用 Expo 的服務就會新增一些要考量的開發成本？</p>
+<p>順道一提，React Conf 的 App 就是使用了 Expo 開發的，當然也有包含上方提及的新功能，都可以在 <a href="https://github.com/expo/react-conf-app" target="_blank" rel="noopener noreferrer">https://github.com/expo/react-conf-app</a> 的 repo 中看到實際的應用。</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="多元的開發應用">多元的開發應用<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#%E5%A4%9A%E5%85%83%E7%9A%84%E9%96%8B%E7%99%BC%E6%87%89%E7%94%A8" class="hash-link" aria-label="多元的開發應用的直接連結" title="多元�的開發應用的直接連結">​</a></h3>
+<p>React native 除了可開發出支援 iOS 、 Android、 Mac OS 、Window 系統的應用程式，React 可以開發這麼多不同的系統，就是基於 react 可以在 Render 階段則是將 Reconciler 時定義好的描述結構轉換使用專屬的 Render 去轉成 Native 的元件。</p>
+<p>在這一次的 conf 中可以看到 React native 也可以開發出支援 Apple vision pro 的應用程式，又 Amazon 的工程師也分享了如何 React native 去開發支援 TV OS 系統應用程式的經驗。</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="react-native-未來的發展">React native 未來的發展<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#react-native-%E6%9C%AA%E4%BE%86%E7%9A%84%E7%99%BC%E5%B1%95" class="hash-link" aria-label="React native 未來的發展的直接連結" title="React native 未來的發展的直接連結">​</a></h3>
+<p>最後 Meta 的 React native 開發團隊分享了未來十年 React native 的開發藍圖：提升 React native 與 Web 的相容性與一致性，確保在不同的平台都有相同開發的體驗，以降低學習曲線。例如：ˋflexboxˋ 這個屬性在 React native 的 styleSheet 跟 CSS 在 web 瀏覽器的應用有一些不同。</p>
+<p><img decoding="async" loading="lazy" src="https://wintersprouter.github.io/frontend-notes/assets/images/1-f39879efb2523e4c88cb984c483df8dc.png" width="1798" height="1022" class="img_ev3q"></p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="react-native-core">React Native core<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#react-native-core" class="hash-link" aria-label="React Native core的直接連結" title="React Native core的直接連結">​</a></h4>
+<p>現行的 React Native 使用 React Native Core 將 React Element 轉換成原生的元素。</p>
+<p><img decoding="async" loading="lazy" src="https://wintersprouter.github.io/frontend-notes/assets/images/2-e60fbddd91ab766692af3c606e63b888.png" width="1798" height="1012" class="img_ev3q"></p>
+<p>在 React Native core 中，Yoga 這個 layout 引擎負責計算 React Native layout 跟 styling 位置，後經過 React Native Runtime 後交由 React Native Renderer 去負責渲染各個平台的視圖，例如： Webview 、UI kit 、 Android ...等。</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="react-dom">React DOM<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#react-dom" class="hash-link" aria-label="React DOM的直接連結" title="React DOM的直接連結">​</a></h4>
+<p><img decoding="async" loading="lazy" src="https://wintersprouter.github.io/frontend-notes/assets/images/3-54c749b19689f10b143747cf940c8104.png" width="1788" height="1014" class="img_ev3q"></p>
+<p>React 則是使用 React DOM 將 React Element 繪製成瀏覽器實際 DOM 元素。</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="react-strict-dom">React strict DOM<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#react-strict-dom" class="hash-link" aria-label="React strict DOM的直接連結" title="React strict DOM的直接連結">​</a></h4>
+<p><img decoding="async" loading="lazy" alt="React strict DOM" src="https://wintersprouter.github.io/frontend-notes/assets/images/4-0649198365807e4d8501ced2682d46e8.png" width="1764" height="998" class="img_ev3q"></p>
+<p>為了要提升 React code sharing 以整合 codebase 在 UI 上支援 web 瀏覽器和 VR 介面...等，React strict DOM 就是基於這個目的而開發的，它可以整合 React Native 和 React ，讓 web api 也可以在 React Native 中使用。</p>
+<p>例如：</p>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="unified-styling">Unified Styling<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#unified-styling" class="hash-link" aria-label="Unified Styling的直接連結" title="Unified Styling的直接連結">​</a></h5>
+<div class="language-jsx! codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-jsx! codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">import { css } from 'react-strict-dom'</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">const styles = css.create({</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    container:{ borderTopWidth:1 },</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    h1:{</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        padding:10,</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        backgroundColor:'#EEE'</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    },</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    content:{</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        padding:10,</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    },</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    div:{</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        paddingTop:50,</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        backgroundColor:'#000'</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    }</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">})</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="複製代碼至剪貼簿" title="複製" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>可以把 web css api 支援到 React Native ，像是偽元素、 media query。</p>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="unified-markup">Unified markup<a href="https://wintersprouter.github.io/frontend-notes/blog/2024-react-conf#unified-markup" class="hash-link" aria-label="Unified markup的直接連結" title="Unified markup的直接連結">​</a></h5>
+<div class="language-jsx! codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-jsx! codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain">import { html } from 'react-strict-dom';</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">&lt;html.div style={style.container}&gt;</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    &lt;html.h1 style={style.h1}&gt;</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    {title}</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    &lt;/html.h1&gt;</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    &lt;html.div style={style.content}&gt;</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        {childern}</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    &lt;/html.div&gt;</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">&lt;/html.div&gt;</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="複製代碼至剪貼簿" title="複製" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>可以在 React Native 中去使用 HTML 開發 web 。</p>
+<p>React strict DOM 最終的目的是讓 codebase 整合成一個，但是共享整個 codebase 跨平台並非主要的目標，應該是合理的去共享這些 code，這樣才可以花更多時間在處理各個平台的不同 UI 細節，而未來新的 web 功能將隨著時間的推移發佈到 React Native ，以提升 web 的相容性。</p>]]></content:encoded>
+            <category>2024 ReactConf</category>
+            <category>event</category>
+            <category>conference</category>
+            <category>React Native</category>
+        </item>
         <item>
             <title><![CDATA[2023 iThome 鐵人賽頒獎典禮後記]]></title>
             <link>https://wintersprouter.github.io/frontend-notes/blog/2023-ironman-event</link>
@@ -62,7 +123,7 @@
 <small><p>剛好之前買過的書都有擔任這次活動的講者，另外 PJ 、Summer
 的文章在我學習前端的過程中也幫助我不少</p></small>
 <hr>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="會後的感受">會後的感受<a href="https://wintersprouter.github.io/frontend-notes/blog/2023-web-conf#%E6%9C%83%E5%BE%8C%E7%9A%84%E6%84%9F%E5%8F%97" class="hash-link" aria-label="會後的感受的直接連結" title="會後的感受的直接連結">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="會後的感受">會後的感受<a href="https://wintersprouter.github.io/frontend-notes/blog/2023-web-conf#%E6%9C%83%E5%BE%8C%E7%9A%84%E6%84%9F%E5%8F%97" class="hash-link" aria-label="會後的感受的直接連結" title="會後的感受的直��接連結">​</a></h2>
 <p><em>可以說是既興奮又焦慮，但焦慮的部分多了一些。</em></p>
 <p>得到了很多新的觀點跟技術，以及開發想法的啟發，這些都讓我感到很興奮，前端的講者都很有料！3400 元值回票價！但同時又覺得憂慮，這兩天議程下來得到技術和工具超多，越知道更多的新知識，越覺得自己對這個領域的認知好渺小（能力也是，一時之間不知道可不可以吸收完這些大神的精華？AI 目前在程式開發的應用，所增進的開發體驗有限，但未來的發展可以說是指日可待，會不會哪一天就不需要工程師了？哇～原來別的開發團隊原來都是利用這些 CICD工具去提升開發的效率，增進團隊溝通，為啥自己待的開發團隊什麼都沒做？</p>
 <hr>

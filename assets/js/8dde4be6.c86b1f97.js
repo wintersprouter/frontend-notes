@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfrontend_notes=self.webpackChunkfrontend_notes||[]).push([[8085],{9047:e=>{e.exports=JSON.parse('{"metadata":{"permalink":"/frontend-notes/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":2,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
