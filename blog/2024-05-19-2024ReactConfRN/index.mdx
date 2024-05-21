@@ -109,10 +109,20 @@ const styles = css.create({
 import { html } from "react-strict-dom";
 <html.div style={style.container}>
   <html.h1 style={style.h1}>{title}</html.h1>
-  <html.div style={style.content}>{childern}</html.div>
+  <html.div style={style.content}>{children}</html.div>
 </html.div>;
 ```
 
 可以在 React Native 中去使用 HTML 開發 web 。
 
+![](https://user-images.githubusercontent.com/239676/205388313-e58f8793-51cd-4a6e-86e7-89425fd2d0e1.png)
+
+#### 結論
+
 React strict DOM 最終的目的是讓 codebase 整合成一個，但是共享整個 codebase 跨平台並非主要的目標，應該是合理的去共享這些 code，這樣才可以花更多時間在處理各個平台的不同 UI 細節，而未來新的 web 功能將隨著時間的推移發佈到 React Native ，以提升 web 的相容性。
+
+目前使用 React 開發 web 跟使用 React Native 開發 app 的體驗是截然不同的，在樣式方面 web 使用 css api、React Native 則是使用 styleSheet；同樣是寫 JSX 的標籤 react 不需要引用、React Native 則是需要從 React Native module 引入 component ，再加上其實有很多支援瀏覽器的屬性現階段在 React Native 是不支援的。
+
+透過 React strict DOM 的開發可以看見開發團隊欲將 React 的生態系整合的決心，如果真的可以將 web 的 api 都可以整合到 React Native 中，那麼就可以真正的實踐 Learn once, write anywhere. ，目前看起來整合的複雜度很高、要解決的問題也不少，還需要一段時間等待。
+
+有關於 React strict DOM 的討論可以參考這個 [RFC: React DOM for Native (reduce API fragmentation) ]https://github.com/react-native-community/discussions-and-proposals/pull/496
