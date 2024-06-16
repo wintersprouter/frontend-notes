@@ -1,0 +1,51 @@
+## Component 的三大生命週期
+
+生命週期就是指一個 React Component 在被創建到被銷毀的過程中，會經歷的一系列階段。
+
+### 一. Mount
+
+Mount 流程會在 component 以 React component 的形式第一次出現在畫面上時觸發。
+
+#### render phase:
+
+1. React 會執行 component function 以傳入的 props 和 state 產生初始畫面區塊的 react element。
+2. 此時 React 內部會建立 fiber node 以儲存 component 的實例，這個 component 實例會包含 component 畫面結構、state、side effect...等。
+3. 接著將生成的 react element 交到 commit phase 處理。
+
+#### commit phase:
+
+1. 由於此時是第一次 render，瀏覽器實際的 DOM 中並沒有相對應的 component 實例 DOM element，因此會將 react element 全部轉成相對應的實際 DOM element。
+2. 使用瀏覽器的 DOM API `appendChild()` 將生成的 DOM element 掛載到實際的瀏覽器 DOM 上。
+3. 此時 component 就會被掛載到瀏覽器的畫面上，可以在實際的 DOM Element 中找到相對應的實例的 DOM element。
+
+#### 執行 side effect:
+
+執行 useEffect hook 中的 副作用。
+
+### 二. Update
+
+Update 流程會在 component 存在於畫面中，當 component 的 props 或 state 資料發生變化時觸發 re-render。在 react 中能夠觸發 re-render 的手段就是使用 `setState` 去更新 state 資料，而 component 有可能會因為父層或祖父層的 component `setState` 去更新 state 而傳入新的 props 而觸發 re-render；也有可能因為 component 本身 state 更新了而觸發 re-render。
+
+#### render phase:
+
+1. React 會執行 component function 以新版本傳入的 props 和 state 重新產生 react element。
+2. 接著將新版本所產生的 react element 與上一次 render 的舊版 react element 進行樹狀結構的比較，找出差異。
+3. 將差異的部分交到 commit phase 處理。
+
+#### commit phase:
+
+只會去操作新舊 react element 差異所對應的實際 DOM element。
+
+#### 清除前一次 render 的 side effect:
+
+執行前一次 useEffect hook 中定義的清除副作用 cleanup 函式。
+
+#### 執行本次 render 的 side effect
+
+### 三. Unmount
+
+當 component 在 re-render 後在新畫面中被移除時，就會觸發 unmount 流程。
+
+1. 會先將 component 從瀏覽器的實際 DOM element 中移除。
+2. 接著會執行最後一次 useEffect hook 中副作用中的 cleanup 函式，以清除留下的副作用影響。
+3. 移除 React 內部的 fiber node。
