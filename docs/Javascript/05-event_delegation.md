@@ -58,7 +58,8 @@ you should only attach one real event listener to the root element.
 ## 解題
 
 這題太難了，所以我看了別人的解答試圖去理解。
-<https://www.youtube.com/watch?v=TkBQYTi1jJU>
+
+參考解答：[BFE.dev 117. event delegation | JSer - Front-End Interview questions](https://www.youtube.com/watch?v=TkBQYTi1jJU>)
 
 ```js
 // Map<node, Array<[predicate, handler]>>
