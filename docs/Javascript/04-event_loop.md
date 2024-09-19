@@ -48,6 +48,8 @@ JavaScript 是單執行緒的語言，所以一次只能執行一件事。事件
 ＊ 文字較為抽象，這個影片的說明更有助於理解整個觀念：
 [JavaScript Visualized - Event Loop, Web APIs, (Micro)task Queue](https://www.youtube.com/watch?v=eiC58R16hb8)
 
+---
+
 ## 實例練習1
 
 [1. Promise order](https://bigfrontend.dev/quiz/1-promise-order)
