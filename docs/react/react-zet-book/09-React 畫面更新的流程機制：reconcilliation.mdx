@@ -36,20 +36,27 @@
 
 ## React reconciliation
 
-1. 呼叫 `setState` 更新資料
+當呼叫 `setState` 後會發起 component re-render，React 會啟動 reconciliation 流程，最終更新瀏覽器的 DOM 並反映在畫面上。這個過程分為兩個主要階段：Render phase 和 Commit phase。component 內的子孫 component 也會連帶觸發 re-render：
 
-2. React 會執行 [Object.is()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is)，檢查 state 新舊資料是否有變化。
+1. 呼叫 `setState` 更新資料
+   當呼叫 `setState` 時，React 並不會立即更新狀態。`setState` 是一個非同步操作，React 會將這個狀態更新加入一個任務隊列中，並且會自動將多個 `setState` 操作合併進行批次更新（batch update）。
+
+2. 檢查 state 是否有變化
+   React 會執行 [Object.is()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is)，檢查 state 新舊資料是否有變化。
    - 如果沒有變化，代表資料沒有更新也就不需要更新畫面，接下來的流程就會中斷。
    - 如果有變化，就是資料有更新，接著就會進行 re-render。
 
 ### Render phase
 
-3. re-render 會執行 component function 並以新版本的 props 和 state 產生新的 react element。
-4. 接著，react 會將前一份產生的舊版 react element 與新版 react element 使用 diffing 演算法來找出樹狀結構差異之處。
+3. 重新執行 Component function
+   re-render 會執行 component function 並以新版本的 props 和 state 產生新的 react element。
+4. Diffing
+   接著，react 會將前一份產生的舊版 react element 與新版 react element 使用 diffing 演算法來找出樹狀結構差異之處。
 
 ### Commit phase
 
-5. 比較完成後，根據差異的的部分所對應的 DOM element 進行操作，最後更新到瀏覽器 DOM 上。
+5. 更新 DOM
+   比較完成後，根據差異的的部分所對應的 DOM element 進行操作， 這個更新過程會在瀏覽器的主執行緒上進行，包括更新 DOM 樹和應用 CSS 樣式，最後更新到瀏覽器 DOM 上。
 
 ## `Object.is()` 拿掉會影響 reconciliation 嗎？
 
