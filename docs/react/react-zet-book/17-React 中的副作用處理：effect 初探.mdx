@@ -1,0 +1,48 @@
+React 在 component function 中提供了一個 `useEffect` hook 來 **隔絕和管理副作用** 。React 在每次 render 之後執行 `useEffect`。
+
+## 副作用 side effect
+
+副作用指的是當函式被呼叫時，除了回傳值以外，還會對外部環境產生影響的操作。常見的副作用包括：
+
+- 呼叫 API
+- 操作 DOM（例如手動新增事件監聽器）
+- 設定計時器（例如 setTimeout、setInterval）
+- 訂閱事件（例如 WebSocket 或其他事件系統）
+- 修改全域變數
+
+## 使用 useEffect hook 處理副作用的原因
+
+若直接在 component function 中處理副作用，會造成以下問題：
+
+- 重複副作用執行：由於函式多次執行而產生疊加副作用會造成 react 無法預測行為，可能導致資料流或程式邏輯無法正常運作。
+- 效能問題： 容易阻塞函式計算，導致產生 react element 的速度變慢，進而造成畫面更新的延遲。
+- 無法清理副作用：直接操作 DOM 或設置計時器時，無法在 component 卸載時自動清理這些副作用，可能導致記憶體洩漏。
+
+## 以 useEffect hook 處理副作用的步驟
+
+```jsx
+import React, { useEffect } from "react";
+import axios from "axios";
+function MyComponent() {
+  const [id, setId] = useState(1);
+
+  useEffect(() => {
+    // 定義副作用，例如呼叫 API
+    console.log("Component rendered");
+    axios.get(`https://api.example.com/data${id}`).then((response) => {
+      console.log(response.data);
+    });
+    // 可選的 cleanup 函式，會在下一次 effect 執行前或 component 卸載時執行
+    return () => {
+      console.log("Cleanup before the next effect or on unmount");
+    };
+  }, [id]); // 依賴陣列，當陣列中的值有變動時才會執行副作用
+
+  return <div>My Component</div>;
+}
+```
+
+1. 在 component function 中使用 `useEffect` hook。
+2. 在 `useEffect` hook 中定義副作用函式，例如呼叫 API。
+3. 如果有需要清除副作用，可以在副作用函式中回傳一個 cleanup 函式。
+4. 在 dependencies array 中傳入依賴陣列，以跳過執行不需要的 render 副作用。
