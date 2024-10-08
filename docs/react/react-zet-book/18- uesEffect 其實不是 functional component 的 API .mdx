@@ -1,0 +1,98 @@
+useEffect hook 最主要的作用在於處理與畫面無關的 side effect，並非是 functional component 的生命週期API，因為這個處理副作用的 hook 不論呼叫幾次都不應該影響的資料流或是程式邏輯。
+
+## useEffect 的 dependencies 機制設計的目的
+
+useEffect 的 dependencies 機制設計的目的是為了讓 React 能夠正確地同步資料，並且優化效能。
+在 dependencies 中傳入 side effect 函式所需要依賴的資料，react 就會在每一個渲染時使用
+`object.is` 來比較前後兩次的 dependencies 依賴的原始資料否有變化，若有變化就會執行 side effect 函式，沒有就可以跳過這次 side effect 的執行。
+
+dependencies 並非是為了控制 side effect 執行的時機或商業邏輯，而是為了讓 react 可以正確地同步化資料，所以應誠實地填寫有依賴到的原始資料到 dependencies 中。
+
+## 在 useEffect 中，根據 dependencies 的不同情境運作的方式：
+
+### dependencies 為空陣列
+
+```jsx
+import React, { useEffect, useState } from "react";
+function App() {
+  useEffect(() => {
+    console.log("Component rendered");
+  }, []);
+  return <div>My Component</div>;
+}
+```
+
+運作流程：
+
+- render：
+
+  - render 階段：react 執行 App component function 產出 react element。
+  - commit 階段：瀏覽器實際的 DOM 中並沒有相對應的 component 實例 DOM element，因此會將 react element 全部轉成相對應的實際 DOM element。然後使用瀏覽器的 DOM API `appendChild()` 將生成的 DOM element 掛載到實際的瀏覽器 DOM 上。
+  - mount： 執行 side effect，印出 "Component rendered"。
+
+- re-render: 假設之後因畫面更新觸發 re-render，由於 dependencies 為空陣列，react 會比較前後兩次的 dependencies 依賴的原始資料，發現沒有變化，因此不會執行 side effect。
+
+### dependencies 中傳入 useState
+
+    ```jsx
+    import React, { useEffect, useState } from "react";
+    function App() {
+      const [count, setCount] = useState(0);
+      useEffect(() => {
+        console.log("Component rendered");
+      }, [count]);
+      return (
+        <div>
+          <button onClick={() => setCount(count =>count + 1)}>Click me</button>
+          <div>{count}</div>
+        </div>
+      );
+    }
+    ```
+
+運作流程：
+
+- render：
+  - render 階段：react 執行 App component function 產出 react element。
+  - commit 階段：瀏覽器實際的 DOM 中並沒有相對應的 component 實例 DOM element，因此會將 react element 全部轉成相對應的實際 DOM element。然後使用瀏覽器的 DOM API `appendChild()` 將生成的 DOM element 掛載到實際的瀏覽器 DOM 上。
+  - mount： 執行 side effect，印出 "Component rendered"。
+- re-render:
+  - 當點擊 button 時觸發 `setCount(count =>count + 1)`，count 的值更新到 1。
+  - `object.is()` 檢查前後兩次的 count 值，發現有變化，因此進入 reconciliation 階段，重新 render。
+  - render 階段：react 執行 App component function 產出 react element。
+  - commit 階段： 將前後兩次的 react element 進行樹狀結構的比較，找出差異，並且只會去操作新舊 react element 差異所對應的實際 DOM element。
+  - mount : 透過 `object.is()`檢查 `useEffect` dependencies 中所有的項目，發現所依賴的資料 count 值有變化，因此執行 side effect，印出 "Component rendered"。
+
+### 不傳入 dependencies
+
+```jsx
+import React, { useEffect, useState } from "react";
+function App() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    console.log("Component rendered");
+  });
+  return (
+    <div>
+      <button onClick={() => setCount((count) => count + 1)}>Click me</button>
+      <div>{count}</div>
+    </div>
+  );
+}
+```
+
+運作流程：
+
+- render：
+
+  - render 階段：react 執行 App component function 產出 react element。
+  - commit 階段：瀏覽器實際的 DOM 中並沒有相對應的 component 實例 DOM element，因此會將 react element 全部轉成相對應的實際 DOM element。然後使用瀏覽器的 DOM API `appendChild()` 將生成的 DOM element 掛載到實際的瀏覽器 DOM 上。
+  - mount： 執行 side effect，印出 "Component rendered"。
+
+- re-render: 假設之後因畫面更新觸發 re-render，沒有傳入 dependencies，因此沒有參考的依賴資料，只要重新渲染就會執行一次 side effect，印出 "Component rendered"。
+
+## 總結：
+
+- 空陣列：useEffect 只在初次 mount 時執行一次，不會再執行。
+- 傳入依賴項：依賴項改變時執行副作用函數，狀態變化正確同步。
+- 無依賴項：每次渲染都會執行副作用，這可能會導致不必要的性能問題。
