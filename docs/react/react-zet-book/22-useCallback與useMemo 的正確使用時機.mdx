@@ -1,8 +1,8 @@
-## `useCallback`的用途
+## `useCallback`的用途和使用時機
 
 `useCallback` hook 最主要的作用在於幫助其他 React 效能優化的手段維持正常，例如：React.`memo`、`useMemo`、`useEffect` 等等，而非效能優化。
 
-將函式傳入 useCallback hook ，並且傳入一個依賴陣列，useCallback hook 會回傳一個 memoized 函式，這個 memoized 函式只有在依賴陣列中的值有變化時才會重新計算，否則會回傳上一次的函式。
+將函式傳入 `useCallback` hook ，並且傳入一個依賴陣列，`useCallback` hook 會回傳一個 memoized 函式，這個 memoized 函式只有在依賴陣列中的值有變化時才會重新計算，否則會回傳上一次的函式。
 以下是一個簡單的範例說明：
 
 ### 使用 `useCallback` hook 前
@@ -90,7 +90,7 @@ export default App;
 
 如此一來可以讓函式可以參與資料流的變化，進而幫助 React hook dependencies 判斷資料流的邏輯運作正常。
 
-## `useMemo`
+## `useMemo`的用途和使用時機
 
 `useMemo` 用法跟 `useCallback` 類似，但是 `useMemo` 是用來快取陣列、物件或者是通常來用處理複雜的計算，以節省效能。
 

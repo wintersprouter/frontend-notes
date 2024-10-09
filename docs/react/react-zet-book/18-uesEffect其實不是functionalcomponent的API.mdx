@@ -43,7 +43,9 @@ function App() {
   }, [count]);
   return (
     <div>
-      <button onClick={() => setCount((count) => count + 1)}>Click me</button>
+      <button onClick={() => setCount((prevCount) => prevCount + 1)}>
+        Click me
+      </button>
       <div>{count}</div>
     </div>
   );
@@ -57,7 +59,7 @@ function App() {
   - commit 階段：瀏覽器實際的 DOM 中並沒有相對應的 component 實例 DOM element，因此會將 react element 全部轉成相對應的實際 DOM element。然後使用瀏覽器的 DOM API `appendChild()` 將生成的 DOM element 掛載到實際的瀏覽器 DOM 上。
   - mount： 執行 side effect，印出 "Component rendered"。
 - re-render:
-  - 當點擊 button 時觸發 `setCount(count =>count + 1)`，count 的值更新到 1。
+  - 當點擊 button 時觸發 `setCount((prevCount)=>prevCount+1)`，count 的值更新到 1。
   - `object.is()` 檢查前後兩次的 count 值，發現有變化，因此進入 reconciliation 階段，重新 render。
   - render 階段：react 執行 App component function 產出 react element。
   - commit 階段： 將前後兩次的 react element 進行樹狀結構的比較，找出差異，並且只會去操作新舊 react element 差異所對應的實際 DOM element。
@@ -74,7 +76,9 @@ function App() {
   });
   return (
     <div>
-      <button onClick={() => setCount((count) => count + 1)}>Click me</button>
+      <button onClick={() => setCount((prevCount) => prevCount + 1)}>
+        Click me
+      </button>
       <div>{count}</div>
     </div>
   );
