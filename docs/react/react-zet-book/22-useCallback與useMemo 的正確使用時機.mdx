@@ -1,0 +1,114 @@
+## `useCallback`的用途
+
+`useCallback` hook 最主要的作用在於幫助其他 React 效能優化的手段維持正常，例如：React.`memo`、`useMemo`、`useEffect` 等等，而非效能優化。
+
+將函式傳入 useCallback hook ，並且傳入一個依賴陣列，useCallback hook 會回傳一個 memoized 函式，這個 memoized 函式只有在依賴陣列中的值有變化時才會重新計算，否則會回傳上一次的函式。
+以下是一個簡單的範例說明：
+
+### 使用 `useCallback` hook 前
+
+```jsx Card.tsx
+import React, { memo } from "react";
+function Card ({ count , handleClick }:props){
+    return (
+        <div>
+            <div>{count}</div>
+            <Button onClick={handleClick}>Click me</Button>
+        </div>
+    );
+}
+export default memo(Card);
+```
+
+```jsx App.tsx
+import React, { useState, useCallback } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+  const updateCount = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
+  const handleClick = () => {
+    alert(count);
+  };
+
+  return (
+    <div>
+      <Card count={count} handleClick={handleClick} />
+      <Button onClick={updateCount}>Update count</Button>
+    </div>
+  );
+}
+export default App;
+```
+
+在這個例子中，`handleClick` 這個函式在每一次 render 的過程中都會重新產生一個新的函式，這樣會導致 `Card` 元件因為感知到 props 中的 `handleClick` 函式有變化而重新渲染。
+
+在這裡看起來似乎沒什麼問題，但是問題在 `Card` 元件被包裹在 `React.memo` 中，`React.memo`是 hoc (higher-order component) ，會在元件 re-render 的時候檢查 props 是否有變化，如果有變化就會重新渲染，否則就會透過快取返回上一次的結果，以達到效能優化的目的。
+
+但是在上方的例子中，可以看到 `handleClick` 函式在每次 render 時都會重新產生一個新的函式，每一次 re-render 傳入的 props 的 `handleClick` 都是不同的函式進而導致 `Card` 元件重新渲染，如此一來，就失去了 `React.memo` 原有的效能優化的目的。
+
+### 使用 `useCallback` hook 後
+
+```jsx Card.tsx
+import React, { memo } from "react";
+function Card ({ count , handleClick }:props){
+    return (
+        <div>
+            <div>{count}</div>
+            <Button onClick={handleClick}>Click me</Button>
+        </div>
+    );
+}
+export default memo(Card);
+```
+
+```jsx App.tsx
+import React, { useState, useCallback } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  const updateCount = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
+  const handleClick = useCallback(() => {
+    alert(count);
+  }, [count]);
+
+  return (
+    <div>
+      <Card count={count} handleClick={handleClick} />
+      <Button onClick={updateCount}>Update count</Button>
+    </div>
+  );
+}
+export default App;
+```
+
+可以上方 `handleClick` 使用 `useCallback` hook 來包裹，並且傳入一個依賴陣列 `[count]`，當 count 資料有變化時，`handleClick`才會重新產生一個新的函式，否則會回傳上一次的函式，`Card` 元件所包裹的`react.memo`就可以正常運作，達到效能優化的目的。
+
+如此一來可以讓函式可以參與資料流的變化，進而幫助 React hook dependencies 判斷資料流的邏輯運作正常。
+
+## `useMemo`
+
+`useMemo` 用法跟 `useCallback` 類似，但是 `useMemo` 是用來快取陣列、物件或者是通常來用處理複雜的計算，以節省效能。
+
+```jsx
+import React, { useState, useMemo } from "react";
+function App() {
+  const [count, setCount] = useState(0);
+  const isEven = useMemo(() => {
+    return count % 2 === 0;
+  }, [count]);
+  return (
+    <div>
+      <div>{count}</div>
+      <div>{isEven ? "Even" : "Odd"}</div>
+      <Button onClick={() => setCount((prev) => prev + 1)}>Increment</Button>
+    </div>
+  );
+}
+```
+
+在以上的例子中，我們實作一個 button 來增加 count 的值，並且使用 `useMemo` hook 來快取 `isEven` 變數，當 count 的值有變化時，`isEven` 變數才會重新計算，否則會快取回傳上一次的結果。
