@@ -98,6 +98,8 @@ function App() {
 
 這個例子使用 `hasFetched` 來追蹤是否已經執行過 fetch data 的操作。當 `hasFetched.current` 為 `false` 時，會執行 `console.log("Fetching data...")`，並將 `hasFetched.current` 設為 `true`，這樣就可以避免重複執行 fetch data 的操作。
 
+---
+
 ## 實例練習
 
 [13. useRef](https://bigfrontend.dev/react-quiz/useRef)
@@ -137,9 +139,9 @@ root.render(<App />);
 
 在初始渲染，react 呼叫 App component function 產生 react element ，並且轉換相對應的 DOM 掛載到螢幕上。
 
-執行 `console.log(ref.current?.textContent)`，因為 useRef 的初始值是 null 所以印出 `undefined`。
+執行 `console.log(ref.current?.textContent)`，因為 useRef 的初始值是 `null` 所以印出 `undefined`。
 
-`state` 為 1，因此第一個 `<div>` 元素被引用。
+`state` 為 1，因此第一個 div 元素被引用。
 
 接著，react 執行 `useEffect` 中 `setState(2)` 會觸發 re-render。
 
@@ -150,4 +152,4 @@ root.render(<App />);
 執行 `console.log(ref.current?.textContent)`，因為 `useRef` 保存了上一次的值，所以印出
 "1"。
 
-在 re-render 時，因為 `state` 更新為 2，第一個 `<div>` 元素的 `ref` 被設為 `null`，第二個 <div> 元素被引用。
+在 re-render 時，因為 `state` 更新為 2，第一個 div 元素的 `ref` 被設為 `null`，第二個 div 元素被引用。
