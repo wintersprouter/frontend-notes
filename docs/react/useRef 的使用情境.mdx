@@ -1,0 +1,153 @@
+# useRef 的使用情境
+
+## `useRef` 是什麼？
+
+`useRef` 是 React 提供的 hook，用來創建一個 可變（mutable）的引用對象，可以用來存取 DOM 元素或保存跨越多次渲染的資料，且在資料變動時不會觸發 re-render。
+
+## `useRef` 的使用情境
+
+### 1. 存取 DOM 元素
+
+`useRef` 最常見的使用情境之一是存取 DOM 元素，讓我們可以直接操作原生 DOM。
+
+```jsx live title="index.jsx"
+function App() {
+  const inputRef = useRef(null);
+  return (
+    <div>
+      <label htmlFor="name">name:</label>
+      <input ref={inputRef} type="text" />
+      <div>
+        <button onClick={() => inputRef.current.focus()}>Click to Focus</button>
+      </div>
+    </div>
+  );
+}
+```
+
+在這個例子中，我們使用 `useRef` hook 來存取 `input` 元素，並且在 `button` 的 `onClick` 事件中，使用 `inputRef.current.focus()` 來 focus 到 input 元素。
+
+### 2.保存跨 re-render 的值
+
+除了存取 DOM，u`useRef` 也可以用來保存那些不會因為 component re-render 而失去的值。
+
+```jsx live title="index.jsx"
+function Counter() {
+  const [count, setCount] = useState(0);
+  const renderCount = useRef(0);
+
+  renderCount.current += 1;
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <p>Component rendered {renderCount.current} times</p>
+      <button onClick={() => setCount((prev) => prev + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+在這個例子中，renderCount 使用 `useRef` 來保存 render 的次數，這樣就不會因為 `count` 的改變而重新 render。
+
+count 使用 `useState` 來保存當前計數器的值 count。，當 `count` 改變時，會重新 render，但是 renderCount 不會受到影響。
+
+初始渲染時，`renderCount.current` 會是 1，當 `count` 改變時，`renderCount.current` 會持續增加。
+
+3. 保存前一個 state 的值
+   `useRef` 還可以用來追蹤 component 在前一次 render 中的 state 值。
+
+```jsx live title="index.jsx"
+function App() {
+  const [name, setName] = useState("Alice");
+  const prevName = useRef("");
+
+  useEffect(() => {
+    prevName.current = name;
+  }, [name]);
+
+  return (
+    <div>
+      <p>Current name: {name}</p>
+      <p>Previous name: {prevName.current}</p>
+      <button onClick={() => setName("Bob")}>Change Name</button>
+    </div>
+  );
+}
+```
+
+在這個例子中，我們使用 `useRef` 來保存前一個 `name` 的值。每次 `name` 改變時，`prevName.current` 都會更新為上一次的 `name`。
+
+4. 追蹤某個 effect 副作用是否已經執行過
+   在某些情況下，我們需要避免副作用多次執行，這時可以使用 useRef 來追蹤是否已經執行過某個操作。
+
+```jsx live title="index.jsx"
+function App() {
+  const hasFetched = useRef(false);
+
+  useEffect(() => {
+    if (!hasFetched.current) {
+      console.log("Fetching data...");
+      hasFetched.current = true;
+    }
+  }, []);
+
+  return <div>Data has been fetched</div>;
+}
+```
+
+這個例子使用 `hasFetched` 來追蹤是否已經執行過 fetch data 的操作。當 `hasFetched.current` 為 `false` 時，會執行 `console.log("Fetching data...")`，並將 `hasFetched.current` 設為 `true`，這樣就可以避免重複執行 fetch data 的操作。
+
+## 實例練習
+
+[13. useRef](https://bigfrontend.dev/react-quiz/useRef)
+
+```jsx
+// This is a React Quiz from BFE.dev
+
+import * as React from "react";
+import { useRef, useEffect, useState } from "react";
+import { createRoot } from "react-dom/client";
+
+function App() {
+  const ref = useRef(null);
+  const [state, setState] = useState(1);
+
+  useEffect(() => {
+    setState(2);
+  }, []);
+
+  console.log(ref.current?.textContent);
+
+  return (
+    <div>
+      <div ref={state === 1 ? ref : null}>1</div>
+      <div ref={state === 2 ? ref : null}>2</div>
+    </div>
+  );
+}
+
+const root = createRoot(document.getElementById("root"));
+root.render(<App />);
+```
+
+## 解題
+
+### 初始渲染
+
+在初始渲染，react 呼叫 App component function 產生 react element ，並且轉換相對應的 DOM 掛載到螢幕上。
+
+執行 `console.log(ref.current?.textContent)`，因為 useRef 的初始值是 null 所以印出 `undefined`。
+
+`state` 為 1，因此第一個 `<div>` 元素被引用。
+
+接著，react 執行 `useEffect` 中 `setState(2)` 會觸發 re-render。
+
+### re-render
+
+重新呼叫 App component function 產生 react element 經過 diff 比較後更新 DOM。
+
+執行 `console.log(ref.current?.textContent)`，因為 `useRef` 保存了上一次的值，所以印出
+"1"。
+
+在 re-render 時，因為 `state` 更新為 2，第一個 `<div>` 元素的 `ref` 被設為 `null`，第二個 <div> 元素被引用。
