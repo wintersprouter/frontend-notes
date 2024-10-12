@@ -1,0 +1,192 @@
+import CodeSandbox from "../../src/components/mdx/CodeSandbox.jsx";
+
+# React 中 `useContext` 跟 React-MobX 的差異
+
+## `useContext`
+
+`useContext` 是 react 提供的一個 hook，可以讓我們透過讀取和訂閱元件中 `context` 共享元件之間的資料，主要是用來解決狀態提升和 prop drilling 的問題（即層層傳遞 props）。
+
+```jsx title="App.jsx"
+import { createContext, useContext, useRef, useState } from "react";
+
+const AuthContext = createContext(null);
+
+export default function App() {
+  const [currentUser, setCurrentUser] = useState("");
+  console.log("App rendered");
+  return (
+    <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
+      <Form />
+    </AuthContext.Provider>
+  );
+}
+
+function WelcomeCard() {
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  console.log("WelcomeCard rendered");
+  return (
+    <div>
+      <h1>Welcome, {currentUser}!</h1>
+      <button onClick={() => setCurrentUser("")}>Log out</button>
+    </div>
+  );
+}
+
+function News() {
+  console.log("News rendered");
+  return (
+    <div>
+      <h1>Latest News</h1>
+      <ul>
+        <li>ewrweorjewoirj</li>
+        <li>ewwwwwrj</li>
+        <li>wjwirjwi</li>
+      </ul>
+    </div>
+  );
+}
+
+function Form() {
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const [name, setName] = useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setCurrentUser(name);
+  }
+  console.log("Form rendered");
+  return (
+    <section>
+      {currentUser && <WelcomeCard />}
+      {!currentUser && (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label name="username">
+              username
+              <input
+                type={"text"}
+                id="username"
+                onChange={(event) => setName(event.target.value)}
+              />
+            </label>
+          </div>
+          <button type="submit">Log in</button>
+        </form>
+      )}
+      <News />
+    </section>
+  );
+}
+```
+
+<CodeSandbox codeSandboxId="5lfkj4" />
+
+在這例子中，使用 useContext 實作了一個簡單的登入表單，當使用者輸入名稱後，點擊登入按鈕，就會顯示歡迎卡片，並且可以登出。
+
+在 App 元件中，使用 `AuthContext.Provider` 提供了 `currentUser` 和 `setCurrentUser` 兩個方法，透過 `useContext` 可以在子元件中取得這兩個方法。
+
+子元件透過 `setCurrentUser` 方法，可以改變 `AuthContext` 的 `currentUser` 的值，並且重新 render 子元件。
+
+### 透過 Context 傳遞資料
+
+在 `WelcomeCard` 中，我們透過 `useContext` 取得 `currentUser` 和 `setCurrentUser`，不需要透過 props 傳遞資料，就可以取得 `currentUser` 的值。
+
+### 更新 `Context` 的值
+
+在 App 元件中，`<AuthContext.Provider value={{ currentUser, setCurrentUser }}></<AuthContext.Provider>`向下子元件提供 `AuthContext` 的初始值 `currentUser` 與更新方法 setCurrentUser 。
+
+在 `Form` 元件中，我們透過`const { currentUser, setCurrentUser } = useContext(AuthContext);` 去取得 `currentUser` 和 `setCurrentUser`，並且在 `handleSubmit` 方法中，透過 `setCurrentUser(name)` 去更新 `AuthContext`的`currentUser` 的值。
+
+### 當 `Context` 的值改變時，會 re-render 子元件
+
+接續上方，當提交表單後，`currentUser` 的值改變，`AuthContext` 的 `currentUser` 的值也會改變，這時候從 `AuthContext` 所在的元件 `App` 向下開始 re-render，並且接續 re-render 子元件 `Form`、 `WelcomeCard`、`News`。
+
+## React-MobX
+
+React-MobX 是一個 React 應用程式狀態管理的工具，透過觀察者模式，當 MobX 狀態變更時元件可以自動更新 UI，不需要手動去更新元件。
+
+```jsx title="App.jsx"
+import Counter from "./Counter";
+import counterStore from "./counterStore";
+import { observer } from "mobx-react-lite";
+
+const Board = observer(() => {
+  console.log("Board rendered");
+  return <h1>Count: {counterStore.count}</h1>;
+});
+
+export default function App() {
+  console.log("App rendered");
+  return (
+    <div>
+      <h1>MobX-State-Tree 計數器範例</h1>
+      <Board />
+      <Counter />
+    </div>
+  );
+}
+```
+
+```jsx title="counterStore.js"
+import { types } from "mobx-state-tree";
+
+// 定義一個 Counter 模型
+const CounterModel = types
+  .model({
+    count: types.number, // 可觀察的狀態
+  })
+  .actions((self) => ({
+    // 定義 action 來修改狀態
+    increment() {
+      self.count += 1;
+    },
+    decrement() {
+      self.count -= 1;
+    },
+  }));
+
+// 創建模型實例
+const counterStore = CounterModel.create({
+  count: 0,
+});
+
+export default counterStore;
+```
+
+- 使用了 mobx-state-tree 來定義一個結構化的狀態樹 `CounterModel`，其中有一個 `count` 狀態和兩個修改該狀態的 action (`increment` 和 `decrement`)。
+
+- 使用 `types.model` 定義 MobX-State-Tree 模型，然後通過 actions 來定義修改狀態的方法。
+
+```jsx title="Counter.jsx"
+import React from "react";
+import { observer } from "mobx-react-lite"; // observer 使 React 元件能觀察 MobX 的狀態變更
+import counterStore from "./counterStore"; // 引入剛才定義的 store
+
+const Counter = observer(() => {
+  console.log("Counter rendered");
+  return (
+    <div>
+      <button onClick={() => counterStore.increment()}>Increment</button>
+      <button onClick={() => counterStore.decrement()}>Decrement</button>
+    </div>
+  );
+});
+
+export default Counter;
+```
+
+- 使用 observer 讓 React 元件能夠觀察並反應 MobX-State-Tree 狀態的變化。當 `counterStore.count` 改變時，React 元件會自動重新渲染。
+- 透過按鈕點擊來觸發 `increment` 和 `decrement` action，這些方法會自動更新狀態。
+- 在這個例子中，只會重新渲染 `Board` 元件，不會像使用 `useContext` 一樣向下更新使用該 `context`的子元件。
+
+  https://codesandbox.io/p/sandbox/5lkzr4
+
+<CodeSandbox codeSandboxId="5lkzr4" />
+
+## `useContext` 和 React-MobX 的差異
+
+| 特性               | `useContext `                                                                                          | React-MobX                                       |
+| ------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
+| 狀態管理範圍       | 可以包裹在特定 component tree ，範圍靈活                                                               | 只能在全域最上層                                 |
+| 狀態變更與更新機制 | 當 `context` 的值更新時，所有使用該 `context` 的元件都會重新渲染，無論這些組件是否實際依賴被更新的值。 | 僅重新渲染觀察到狀態變更的元件，精細控制渲染粒度 |
+| 應用場景           | 適合多語系、主題等較簡單的全域性的狀態管理                                                             | 適合較大型的應用程式，需要更細粒度的狀態管理     |
