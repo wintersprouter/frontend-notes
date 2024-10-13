@@ -1,0 +1,93 @@
+# 手寫實作 debounce 防抖函式和 throttle 節流函式
+
+防抖和節流函式是前端常見的效能優化的技巧，透過這兩個函式可以有效的減少函式被觸發的次數，達到效能優化的目的。
+
+# debounce 防抖函式
+
+防抖函式的作用是在一段時間內只執行一次函式。當多次觸發事件時，防抖函式會在最後一次事件觸發後的一段時間內執行一次函式。如果在這段時間內再次觸發事件，計時器會重新計時。
+
+## 應用場景
+
+- 輸入框搜尋建議：當使用者在搜尋框中輸入時，如果每次按鍵都立即發送請求，這將導致過多的請求。在使用防抖函式後，只有使用者停止輸入一段時間後才會發送搜尋請求。
+- 按鈕防連點：當使用者連續點擊按鈕時，如果沒有防抖函式，每次點擊都會觸發事件。使用防抖函式後，只有最後一次點擊會觸發事件。
+- 調整瀏覽器大小事件：如果每次窗口大小調整時都進行重新渲染，會造成性能浪費。可以使用防抖讓瀏覽器大小調整完畢後才進行重繪。
+
+## 實例練習
+
+[6. implement basic debounce()](https://bigfrontend.dev/problem/implement-basic-debounce)
+
+```js
+// This is a JavaScript coding problem from BFE.dev
+
+/**
+ * @param {(...args: any[]) => any} func
+ * @param {number} wait
+ * @returns {(...args: any[]) => any}
+ */
+function debounce(func, wait) {
+  // your code here
+}
+```
+
+## 解題
+
+利用計時器 (setTimeout) 來延遲執行目標函式，當 debounce function 被多次觸發時，會不斷清除舊的 timeoutId 並重新計時，直到停止觸發後才執行 func
+
+```js
+/**
+ * @param {(...args: any[]) => any} func 要執行的函式 func
+ * @param {number} wait 等待時間 (ms)
+ * @returns {(...args: any[]) => any}
+ */
+
+function debounce(func, wait) {
+  let timeoutId;
+  return function (...args) {
+    // 每一次觸發 debounce function 時會清除之前的 timeoutId
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    // 重新計時，設定新的 timeoutId
+    // 當 wait 時間內沒有再次觸發 debounce function 時，執行 func
+    timeoutId = setTimeout(() => func(...args), wait);
+  };
+}
+```
+
+# throttle 節流函式
+
+節流函式的作用是的作用是在多次觸發事件中，保證函式在固定的時間間隔內只執行一次。當多次觸發事件時，節流函式會在一段時間內執行一次函式 callback。如果在這段時間內再次觸發事件，函式不會被執行，直到這段時間結束。
+
+## 應用場景
+
+- 滾動事件監聽器：當用戶滾動頁面時，可以使用節流控制事件觸發次數，避免高頻率地調用處理函式。
+- 按鈕點擊：限制點擊按鈕的次數，避免用戶短時間內多次點擊造成多次請求或響應。
+
+## 手寫 throttle 節流函式
+
+1. 檢查時間是否到達，如果到達執行函式，否則不執行。
+2. 設定 timer，等待 wait 時間後清除 timer。
+
+```js
+/**
+ * @param {(...args:any[]) => any} func 要執行的函式 func
+ * @param {number} wait 等待時間 (ms)
+ * @returns {(...args:any[]) => any}
+ */
+function throttle(func, wait) {
+  let timer = null;
+
+  return function (...args) {
+    // 如果 timer 存在，表示還在節流等待期間，不執行函式
+    if (timer) return;
+
+    // 設定 timer，等到 wait 時間結束後執行 callback 並清除 timer
+    timer = setTimeout(() => {
+      timer = null;
+    }, wait);
+
+    // 時間到，執行 callback 函式
+    func.apply(this, args);
+  };
+}
+```
