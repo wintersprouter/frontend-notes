@@ -1,3 +1,11 @@
+---
+slug: interface-type
+title: Interface 和 Type 的差別
+authors: [ashley]
+tags: [2024iT鐵人賽, Typescript, interface, type]
+keywords: ["2024iT鐵人賽", "Typescript", "interface", "type"]
+---
+
 # Interface 和 Type 的差別
 
 ## 1.TypeScript 編譯器推論結果不同

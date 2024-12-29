@@ -1,4 +1,12 @@
-# 請說明 JavaScript 中 `let`, `var` , `const` 的差異為何?
+---
+slug: variables
+title: let, var ,const 的差異
+authors: [ashley]
+tags: [2024iT鐵人賽, variables, JavaScript, let, var, const]
+keywords: ["2024iT鐵人賽", "variables", "JavaScript", "let", "var", "const"]
+---
+
+# JavaScript 中 `let`, `var` , `const` 的差異
 
 使用 `let`、`var` 和 `const` 宣告變數時分別在：作用域、初始化、重複宣告、重新賦值、提升時有不同的行為。
 

@@ -1,4 +1,12 @@
-# 請說明 JavaScript 中的事件委派 event delegation 是什麼?
+---
+slug: event-delegation
+title: Event delegation 事件委派
+authors: [ashley]
+tags: [2024iT鐵人賽, event delegation, JavaScript]
+keywords: ["2024iT鐵人賽", "event delegation", "JavaScript"]
+---
+
+# JavaScript 中的事件委派 event delegation
 
 ## 事件委派 event delegation
 

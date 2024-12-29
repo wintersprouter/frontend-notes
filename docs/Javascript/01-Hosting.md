@@ -1,4 +1,12 @@
-# 請說明什麼是 Hosting 提升?
+---
+slug: hosting
+title: Hosting 提升
+authors: [ashley]
+tags: [2024iT鐵人賽, hosting, JavaScript]
+keywords: ["2024iT鐵人賽", "hosting", "JavaScript"]
+---
+
+# Hosting 提升
 
 Hosting 提升指的是在執行 JavaScript 程式碼之前， JavaScript 引擎會將變數和函式的宣告提升到作用域的頂端。
 

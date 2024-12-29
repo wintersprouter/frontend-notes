@@ -1,4 +1,12 @@
-# 請說明 this 如何在 JavaScript 中運作？
+---
+slug: this
+title: this 如何在 JavaScript 中運作？
+authors: [ashley]
+tags: [2024iT鐵人賽, this, JavaScript]
+keywords: ["2024iT鐵人賽", "this", "JavaScript"]
+---
+
+# this 如何在 JavaScript 中運作？
 
 在 JavaScript 中`this`的指向會根據不同呼叫的方式而有不同的結果，以下分別列出幾種`this`的運作方式：
 

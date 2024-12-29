@@ -2,6 +2,12 @@
 ## sidebar_position: 1
 
 ### DOM 與 Virtual DOM
+slug: dom-vdom
+title: DOM 與 Virtual DOM
+authors: [ashley]
+tags: [2024iT鐵人賽, React, 《React 思維進化》讀書筆記, dom, virtual dom]
+keywords:
+  ["2024iT鐵人賽", "React", "《React 思維進化》讀書筆記", "dom", "virtual dom"]
 ---
 
 ## DOM

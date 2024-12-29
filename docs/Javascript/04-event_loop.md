@@ -1,4 +1,12 @@
-# 請說明 JavaScript 中的事件循環 event loop 是什麼?
+---
+slug: event-loop
+title: Event loop 事件循環
+authors: [ashley]
+tags: [2024iT鐵人賽, event-loop, JavaScript]
+keywords: ["2024iT鐵人賽", "event-loop", "JavaScript"]
+---
+
+# JavaScript 中的事件循環 event loop 是什麼?
 
 JavaScript 是單執行緒的語言，所以一次只能執行一件事。事件循環 Event loop 是可以確保作為單行緒語言的 Javascript 可以在執行環境(瀏覽器或Node.js)中執行非同步 (asynchronous)程式碼而不會阻塞主執行緒的機制。
 
