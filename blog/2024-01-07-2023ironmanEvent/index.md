@@ -11,6 +11,8 @@ image: https://raw.githubusercontent.com/wintersprouter/frontend-notes/main/blog
 
 ![](./20240106_134049.jpg)
 
+<!--truncate-->
+
 地點好像跟之前幾屆的一樣在輔大的百鍊廳，從校門口走到百鍊廳有點距離，~~想當初上次來輔大還只是個高中生~~
 
 ![](./20240106_134000.jpg)

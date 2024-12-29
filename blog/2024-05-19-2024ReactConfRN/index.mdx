@@ -15,6 +15,8 @@ image: ./cover.png
 
 截至 2024 年 3 月 React Native 的在 npm 上的每週下載數突破了220萬，越來越多的開發者使用;同時 React Native 開發團隊也宣布 New Architecture 終於上 beta 了，從 0.68 版本 2022 年 3 月在 React Native 加入了 New Architecture 到現在升級到 0.74 版本後使用 react-native-cli 可以分別在 Android 的 `gradle.properties` 啟用、iOS 則是在 iOS 的位置執行 `bundle install && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install`、使用 Expo 則可以 Expo 51 的設定檔案分別開啟 iOS 跟 Android 是否支援 New Architecture。官方是建議大家可以先玩看看新架構，然後如果有遇到問題的話幫忙回報一下 issue。
 
+<!--truncate-->
+
 至於為什麼要改整個大改呢？這就要回歸到現在 React Native 的架構，目前的 Javascript 用 bridge 的方式和原生構通，透過 JSON 反序列化和序列化經由 bridge 來傳遞訊息，但使用 bridge 來溝通一次只能有一端通過，而且每傳遞一次就要用 JSON 反序列化和序列化來轉換資料，是相當耗費的效能的。
 
 那麼 New Architecture 是如何改善這個問題呢？主要使用 JavaScript Interface（簡稱 JSI ）讓 JavaScript 與原生進行溝通，JSI 是用 C++ 寫的，他使用 memory sharing 的方式讓 JavaScript 層與 native 層溝通，也可以讓 JavaScript 同步運行在 native 層，直接讓 JavaScript 程式碼呼叫原生程式碼的函數，更有效率地去直接溝通原生層。
