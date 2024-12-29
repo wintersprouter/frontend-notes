@@ -2,8 +2,8 @@
 slug: 2023-ironman-event
 title: 2023 iThome 鐵人賽頒獎典禮後記
 authors: [ashley]
-tags: [2023 鐵人賽, event]
-keywords: ["2023 鐵人賽"]
+tags: [2023iT鐵人賽, event]
+keywords: ["2023iT鐵人賽"]
 image: https://raw.githubusercontent.com/wintersprouter/frontend-notes/main/blog/2024-01-07-2023ironmanEvent/20240106_172410.jpg
 ---
 
