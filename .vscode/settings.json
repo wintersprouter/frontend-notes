@@ -1,0 +1,11 @@
+{
+  "editor.indentSize": "tabSize",
+  "editor.semanticTokenColorCustomizations": {},
+  // 在保存時自動修覆
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // 在編輯器中靜默錯誤顯示，但仍然應用自動修覆
+  "eslint.rules.customizations": [{ "rule": "@stylistic/*", "severity": "off" }]
+}
