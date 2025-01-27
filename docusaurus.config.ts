@@ -119,7 +119,15 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
-  plugins: [],
+  plugins: [
+    [
+      "@docusaurus/plugin-google-gtag",
+      {
+        trackingID: "G-YD7TQHCJ54",
+        anonymizeIP: true,
+      },
+    ],
+  ],
 } satisfies Config;
 
 export default config;
