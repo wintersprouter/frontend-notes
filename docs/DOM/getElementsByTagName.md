@@ -14,14 +14,14 @@ keywords: ["getElementsByTagName", "DOM", "JavaScript", "recursion"]
 
 ## 輸入參數
 
-一個 element 作為起始搜尋的根節點。
-一個 tag 字串。
+- 一個 element 作為起始搜尋的根節點。
+- 一個 tag 字串。
 
 ## 功能需求
 
-搜尋 element 的所有後代（不包含自身）是否包含指定的 tag 名稱。
-如果節點的 tag 包含了所有指定的 tag 名稱，就將其加入結果陣列中。
-最終返回一個陣列（`Array<Element>`），而非類陣列（`HTMLCollection`）。
+- 搜尋 element 的所有後代（不包含自身）是否包含指定的 tag 名稱。
+- 如果節點的 tag 包含了所有指定的 tag 名稱，就將其加入結果陣列中。
+- 最終返回一個陣列（`Array<Element>`），而非類陣列（`HTMLCollection`）。
 
 ## 範例
 
@@ -41,7 +41,7 @@ getElementsByTagName(doc.body, "div");
 
 ## 實作思路：
 
-由於DOM 是樹狀結構，透過 **遞迴** 進行可以方便地遍歷所有的子節點及其後代，並將符合條件的節點加入陣列中。
+由於 DOM 是樹狀結構，透過 **遞迴** 進行可以方便地遍歷所有的子節點及其後代，並將符合條件的節點加入陣列中。
 
 ```ts
 export default function getElementsByTagName(
